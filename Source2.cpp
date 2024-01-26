@@ -1,0 +1,3 @@
+import globalInstances;
+void a(){
+}
