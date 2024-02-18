@@ -1,3 +1,5 @@
+module;
+
 // dear imgui: Platform Backend for Windows (standard windows API for 32-bits AND 64-bits applications)
 // This needs to be used along with a Renderer (e.g. DirectX11, OpenGL3, Vulkan..)
 
@@ -18,7 +20,7 @@
 // - Introduction, links and more at the top of imgui.cpp
 
 #include "imgui.h"
-#ifndef IMGUI_DISABLE
+//#ifndef IMGUI_DISABLE
 #include "imgui_impl_win32.h"
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -37,6 +39,7 @@
 typedef DWORD (WINAPI *PFN_XInputGetCapabilities)(DWORD, DWORD, XINPUT_CAPABILITIES*);
 typedef DWORD (WINAPI *PFN_XInputGetState)(DWORD, XINPUT_STATE*);
 #endif
+module imgui_module;
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
@@ -1309,4 +1312,4 @@ static void ImGui_ImplWin32_ShutdownPlatformInterface()
 
 //---------------------------------------------------------------------------------------------------------
 
-#endif // #ifndef IMGUI_DISABLE
+//#endif // #ifndef IMGUI_DISABLE

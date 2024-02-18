@@ -1,3 +1,4 @@
+module;
 // dear imgui, v1.90 WIP
 // (drawing and font code)
 
@@ -31,7 +32,7 @@ Index of this file:
 #endif
 
 #include "imgui.h"
-#ifndef IMGUI_DISABLE
+//#ifndef IMGUI_DISABLE
 #include "imgui_internal.h"
 #ifdef IMGUI_ENABLE_FREETYPE
 #include "misc/freetype/imgui_freetype.h"
@@ -124,6 +125,8 @@ namespace IMGUI_STB_NAMESPACE
 #include "imstb_rectpack.h"
 #endif
 #endif
+module imgui_module;
+
 
 #ifdef  IMGUI_ENABLE_STB_TRUETYPE
 #ifndef STB_TRUETYPE_IMPLEMENTATION                         // in case the user already have an implementation in the _same_ compilation unit (e.g. unity builds)
@@ -4316,4 +4319,4 @@ static const char* GetDefaultCompressedFontDataTTFBase85()
     return proggy_clean_ttf_compressed_data_base85;
 }
 
-#endif // #ifndef IMGUI_DISABLE
+//#endif // #ifndef IMGUI_DISABLE

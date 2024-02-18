@@ -1,3 +1,0 @@
-import globalInstances;
-void a(){
-}

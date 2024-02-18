@@ -1,3 +1,4 @@
+module;
 // dear imgui, v1.90 WIP
 // (demo code)
 
@@ -95,7 +96,7 @@ Index of this file:
 #endif
 
 #include "imgui.h"
-#ifndef IMGUI_DISABLE
+//#ifndef IMGUI_DISABLE
 
 // System includes
 #include <ctype.h>          // toupper
@@ -107,6 +108,8 @@ Index of this file:
 #if !defined(_MSC_VER) || _MSC_VER >= 1800
 #include <inttypes.h>       // PRId64/PRIu64, not avail in some MinGW headers.
 #endif
+
+module imgui_module;
 
 // Visual Studio warnings
 #ifdef _MSC_VER
@@ -8602,4 +8605,4 @@ void ImGui::ShowStyleEditor(ImGuiStyle*) {}
 
 #endif
 
-#endif // #ifndef IMGUI_DISABLE
+//#endif // #ifndef IMGUI_DISABLE

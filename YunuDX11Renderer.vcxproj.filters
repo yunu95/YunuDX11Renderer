@@ -28,16 +28,19 @@
     <Filter Include="Main">
       <UniqueIdentifier>{e19dcdf5-56b9-476e-863e-5c449121d288}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Snippet">
+      <UniqueIdentifier>{825b8f02-43fc-4cac-aec4-04ec7a85b6bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11Context">
+      <UniqueIdentifier>{904f1e89-262d-483a-829d-56b07ce69e9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX12Context">
+      <UniqueIdentifier>{b30fa536-97fc-4449-9c5b-13b72697070f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GlobalInstances.ixx">
       <Filter>GlobalCom</Filter>
-    </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source2.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RenderCycle.ixx">
       <Filter>RenderCycle</Filter>
@@ -77,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="Main_imgui.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Snippet.ixx">
+      <Filter>Snippet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

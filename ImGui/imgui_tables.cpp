@@ -1,3 +1,5 @@
+module;
+
 // dear imgui, v1.90 WIP
 // (tables and columns code)
 
@@ -194,11 +196,12 @@ Index of this file:
 #endif
 
 #include "imgui.h"
-#ifndef IMGUI_DISABLE
+//#ifndef IMGUI_DISABLE
 #include "imgui_internal.h"
 
 // System includes
 #include <stdint.h>     // intptr_t
+module imgui_module;
 
 // Visual Studio warnings
 #ifdef _MSC_VER
@@ -4159,4 +4162,4 @@ void ImGui::Columns(int columns_count, const char* id, bool border)
 
 //-------------------------------------------------------------------------
 
-#endif // #ifndef IMGUI_DISABLE
+//#endif // #ifndef IMGUI_DISABLE

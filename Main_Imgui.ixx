@@ -8,7 +8,6 @@ export module imgui_module;
 
 // Data
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-extern int abbangth();
 
 export namespace imgui
 {
@@ -43,7 +42,6 @@ export namespace imgui
     // Main code
     int InitImgui()
     {
-        abbangth();
         // Create application window
         //ImGui_ImplWin32_EnableDpiAwareness();
         wc = { sizeof(wc), CS_CLASSDC, ImguiWndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"ImGui Example", nullptr };
