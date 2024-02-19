@@ -31,11 +31,20 @@
     <Filter Include="Snippet">
       <UniqueIdentifier>{825b8f02-43fc-4cac-aec4-04ec7a85b6bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11Context">
+    <Filter Include="dx11">
       <UniqueIdentifier>{904f1e89-262d-483a-829d-56b07ce69e9f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX12Context">
+    <Filter Include="dx11\context">
+      <UniqueIdentifier>{25d3c681-8ad6-47c8-b683-bce42dfcc570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx12">
       <UniqueIdentifier>{b30fa536-97fc-4449-9c5b-13b72697070f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{247dae59-6b4e-497f-9b93-383e98707c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Singleton">
+      <UniqueIdentifier>{d2fa3ddd-b244-40d8-8f2d-4fcdf38e30c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +92,12 @@
     </ClCompile>
     <ClCompile Include="Snippet.ixx">
       <Filter>Snippet</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Context.ixx">
+      <Filter>dx11\context</Filter>
+    </ClCompile>
+    <ClCompile Include="Singleton.ixx">
+      <Filter>Utils\Singleton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
