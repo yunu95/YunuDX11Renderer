@@ -93,11 +93,14 @@
     <ClCompile Include="Snippet.ixx">
       <Filter>Snippet</Filter>
     </ClCompile>
-    <ClCompile Include="DX11Context.ixx">
+    <ClCompile Include="D11Context.ixx">
       <Filter>dx11\context</Filter>
     </ClCompile>
     <ClCompile Include="Singleton.ixx">
       <Filter>Utils\Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.ixx">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

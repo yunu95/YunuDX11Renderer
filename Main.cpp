@@ -2,7 +2,7 @@ module;
 #include <iostream>
 module main;
 
-import RenderCycle;
+import renderCycle;
 import imgui_module;
 
 int main()

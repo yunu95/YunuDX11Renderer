@@ -141,7 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DX11Context.ixx" />
+    <ClCompile Include="D11Context.ixx" />
     <ClCompile Include="GlobalInstances.ixx" />
     <ClCompile Include="ImGui\backends\imgui_impl_dx11.cpp">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
@@ -180,6 +180,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Singleton.ixx" />
     <ClCompile Include="Snippet.ixx" />
+    <ClCompile Include="utils.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DX11Dependency.h" />

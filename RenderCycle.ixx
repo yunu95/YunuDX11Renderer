@@ -1,6 +1,7 @@
 module;
 #include <Windows.h>
-export module RenderCycle;
+export module renderCycle;
+import d11Context;
 import imgui_module;
 
 export class Cycle
@@ -12,6 +13,7 @@ public:
         QueryPerformanceFrequency((LARGE_INTEGER*)&countsPerSec);
         secondsPerCount = 1.0f / (float)countsPerSec;
         imgui::InitImgui();
+        dx11::Context::GetInstance().Init();
     }
     static bool UpdateCycle()
     {
@@ -21,6 +23,7 @@ public:
         INT64 deltaTime = (currTime - prevTime);
         dt = (float)deltaTime * secondsPerCount;
         success &= imgui::UpdateImgui();
+        success &= dx11::Context::GetInstance().Update();
 
         return success;
     }
