@@ -16,7 +16,7 @@ export namespace dx11
         static constexpr int Window_Width = 800;
         static constexpr int Window_Height = 800;
         ComPtr<ID3D11Device> dev;
-        ComPtr<ID3D11DeviceContext> devcon;
+        ComPtr<ID3D11DeviceContext> deviceContext;
         ComPtr<IDXGISwapChain> swapChain;
 
         //static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -71,7 +71,7 @@ export namespace dx11
 
             //D3D11CreateDevice();
             HRESULT hr = D3D11CreateDeviceAndSwapChain
-            (NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, featureLevels, 3, D3D11_SDK_VERSION, &scd, swapChain.GetAddressOf(), dev.GetAddressOf(), &featureLevelSupported, devcon.GetAddressOf());
+            (NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, featureLevels, 3, D3D11_SDK_VERSION, &scd, swapChain.GetAddressOf(), dev.GetAddressOf(), &featureLevelSupported, deviceContext.GetAddressOf());
             assert(SUCCEEDED(hr));
 
             // 렌더 타겟 뷰 생성
@@ -84,7 +84,7 @@ export namespace dx11
             backBuffer->Release();
 
             // 렌더 타겟 설정
-            devcon->OMSetRenderTargets(1, nullptr, nullptr);
+            deviceContext->OMSetRenderTargets(1, nullptr, nullptr);
 
             // 뷰포트 설정, 여기선 윈도우 크기와 똑같음.
             // 뷰포트는 정규장치 좌표계(NDC)와 렌더타겟 표면과의 관계를 정의한다.
@@ -97,7 +97,7 @@ export namespace dx11
             };
             // 레스터라이저는 프리미티브한 애들을 픽셀로 변환해준다. 
             // NDC 공간에서 렌더타겟 표면으로 좌표 사상을 해야 레스터라이징이 가능하기에 뷰포트를 지정해 주는 것.
-            devcon->RSSetViewports(1, &viewport);
+            deviceContext->RSSetViewports(1, &viewport);
 
             // 루프에서는 아래 코드 돌리면 됨.
             //while (GetMessage(&msg, NULL, 0, 0)) { // Get and dispatch messages until a WM_QUIT message is received

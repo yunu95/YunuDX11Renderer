@@ -1,14 +1,13 @@
 #pragma once
 #include <Windows.h>
 #include <assert.h>
-#include <d3d12.h>
-#include <dxgi1_4.h>
+#include <d3d11.h>
 #include <wrl/client.h>
 #include "Singleton.h"
 
 using namespace Microsoft::WRL;
 
-namespace dx11
+namespace dx12
 {
     class Context : public Singleton<Context>
     {
@@ -16,13 +15,14 @@ namespace dx11
         // default window size
         static constexpr int Window_Width = 800;
         static constexpr int Window_Height = 800;
-        ComPtr<ID3D12Device> dev;
-        ComPtr<ID3D12CommandQueue> commandQueue; // deviceContext가 빠지고 CommandQueue가 생김
-        ComPtr<IDXGISwapChain3> swapChain; // 이제 스왑체인이 swapChain3라고 불림
-        ComPtr<ID3D12Resource> renderTargets[2];		// 렌더타겟 객체가 더블 버퍼링을 위해 둘 존재함.
-        ComPtr<ID3D12DescriptorHeap> rtvHeap;		// 렌더 타겟 뷰 힙
-        UINT rtvDescriptorSize;
+        ComPtr<ID3D11Device> dev;
+        ComPtr<ID3D11DeviceContext> deviceContext;
+        ComPtr<IDXGISwapChain> swapChain;
+        ComPtr<ID3D11RenderTargetView> renderTargetView;		// 랜더 타겟 뷰
+        ComPtr<ID3D11Texture2D> depthStencilBuffer;		// 뎁스 스탠실 버퍼
+        ComPtr<ID3D11DepthStencilView> depthStencilView;		// 뎁스 스탠실 뷰
 
+        //static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
         int Init()
         {
             HINSTANCE hInstance = GetModuleHandle(NULL);
@@ -32,7 +32,7 @@ namespace dx11
             wc.lpfnWndProc = WindowProc; // 윈도우 프로시저 콜백 함수 설정
             wc.hInstance = hInstance; // 어플리케이션 인스턴스에 대한 핸들
             wc.hCursor = LoadCursor(NULL, IDC_ARROW); // 표준 마우스 커서 사용 
-            wc.lpszClassName = L"DirectX12 Tutorial"; // 윈도우 클래스 이름 설정
+            wc.lpszClassName = L"DirectX11 Tutorial"; // 윈도우 클래스 이름 설정
             RegisterClassEx(&wc); // 윈도우 클래스를 시스템에 등록
 
             RECT wr = { 0,0,Window_Width,Window_Height }; // 윈도우 사각형 범위 정의

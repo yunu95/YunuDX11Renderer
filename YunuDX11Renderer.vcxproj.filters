@@ -46,6 +46,9 @@
     <Filter Include="Utils\Singleton">
       <UniqueIdentifier>{d2fa3ddd-b244-40d8-8f2d-4fcdf38e30c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dx12\context">
+      <UniqueIdentifier>{43235ba5-b697-44d1-948a-d471be4cb8b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp">
@@ -97,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Utils\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="D12Context.h">
+      <Filter>dx12\context</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

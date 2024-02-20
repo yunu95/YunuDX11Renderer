@@ -178,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D11Context.h" />
+    <ClInclude Include="D12Context.h" />
     <ClInclude Include="DX11Dependency.h" />
     <ClInclude Include="Main_imgui.h" />
     <ClInclude Include="RenderCycle.h" />
