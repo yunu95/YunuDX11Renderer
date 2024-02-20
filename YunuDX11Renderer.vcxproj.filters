@@ -48,12 +48,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GlobalInstances.ixx">
-      <Filter>GlobalCom</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderCycle.ixx">
-      <Filter>RenderCycle</Filter>
-    </ClCompile>
     <ClCompile Include="ImGui\imgui.cpp">
       <Filter>ImGUI</Filter>
     </ClCompile>
@@ -75,14 +69,8 @@
     <ClCompile Include="ImGui\backends\imgui_impl_win32.cpp">
       <Filter>ImGUI</Filter>
     </ClCompile>
-    <ClCompile Include="Main.ixx">
-      <Filter>Main</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="Main_Imgui.ixx">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RenderCycle.cpp">
       <Filter>RenderCycle</Filter>
@@ -90,22 +78,25 @@
     <ClCompile Include="Main_imgui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Snippet.ixx">
-      <Filter>Snippet</Filter>
-    </ClCompile>
-    <ClCompile Include="D11Context.ixx">
-      <Filter>dx11\context</Filter>
-    </ClCompile>
-    <ClCompile Include="Singleton.ixx">
-      <Filter>Utils\Singleton</Filter>
-    </ClCompile>
-    <ClCompile Include="utils.ixx">
-      <Filter>Utils</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DX11Dependency.h">
       <Filter>DX11Dependency</Filter>
+    </ClInclude>
+    <ClInclude Include="D11Context.h">
+      <Filter>dx11\context</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderCycle.h">
+      <Filter>RenderCycle</Filter>
+    </ClInclude>
+    <ClInclude Include="Snippet.h">
+      <Filter>Snippet</Filter>
+    </ClInclude>
+    <ClInclude Include="Main_imgui.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Utils\Singleton</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

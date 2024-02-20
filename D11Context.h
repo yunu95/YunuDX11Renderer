@@ -1,13 +1,13 @@
-module;
+#pragma once
 #include <Windows.h>
 #include <assert.h>
 #include <d3d11.h>
 #include <wrl/client.h>
-export module d11Context;
+#include "Singleton.h"
 
 using namespace Microsoft::WRL;
 
-export namespace dx11
+namespace dx11
 {
     class Context : public Singleton<Context>
     {
@@ -34,7 +34,7 @@ export namespace dx11
 
             RECT wr = { 0,0,Window_Width,Window_Height }; // 윈도우 사각형 범위 정의
             AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE); // adjust the window size based on the desired window style
-            HWND hWnd = CreateWindowEx(NULL, L"DirectX11Tutorial", L"DirectX 11 Red Screen", WS_OVERLAPPEDWINDOW, 100, 100, wr.right - wr.left, wr.bottom - wr.top, NULL, NULL, hInstance, NULL); // Create the window
+            HWND hWnd = CreateWindowEx(NULL, L"DirectX11 Tutorial", L"DirectX 11 Red Screen", WS_OVERLAPPEDWINDOW, 100, 100, wr.right - wr.left, wr.bottom - wr.top, NULL, NULL, hInstance, NULL); // Create the window
 
             // Direct X11 초기화
 
@@ -70,8 +70,21 @@ export namespace dx11
             D3D_FEATURE_LEVEL featureLevelSupported; // 지원가능한 피처 레벨 저장
 
             //D3D11CreateDevice();
-            HRESULT hr = D3D11CreateDeviceAndSwapChain
-            (NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, featureLevels, 3, D3D11_SDK_VERSION, &scd, swapChain.GetAddressOf(), dev.GetAddressOf(), &featureLevelSupported, devcon.GetAddressOf());
+            HRESULT hr;
+            hr = D3D11CreateDeviceAndSwapChain(
+                NULL,
+                D3D_DRIVER_TYPE_HARDWARE,
+                NULL,
+                NULL,
+                featureLevels, 3,
+                D3D11_SDK_VERSION,
+                &scd,
+                swapChain.GetAddressOf(),
+                dev.GetAddressOf(),
+                &featureLevelSupported,
+                devcon.GetAddressOf());
+
+            //hr = D3D11CreateDevice()
             assert(SUCCEEDED(hr));
 
             // 렌더 타겟 뷰 생성

@@ -1,4 +1,3 @@
-module;
 // dear imgui, v1.90 WIP
 // (widgets code)
 
@@ -40,12 +39,11 @@ Index of this file:
 #endif
 
 #include "imgui.h"
-//#ifndef IMGUI_DISABLE
+#ifndef IMGUI_DISABLE
 #include "imgui_internal.h"
 
 // System includes
 #include <stdint.h>     // intptr_t
-module imgui_module;
 
 //-------------------------------------------------------------------------
 // Warnings
@@ -3840,7 +3838,6 @@ static bool STB_TEXTEDIT_INSERTCHARS(ImGuiInputTextState* obj, int pos, const Im
 #define STB_TEXTEDIT_IMPLEMENTATION
 #define STB_TEXTEDIT_memmove memmove
 #include "imstb_textedit.h"
-
 
 // stb_textedit internally allows for a single undo record to do addition and deletion, but somehow, calling
 // the stb_textedit_paste() function creates two separate records, so we perform it manually. (FIXME: Report to nothings/stb?)
@@ -9045,4 +9042,4 @@ void ImGui::TabItemLabelAndCloseButton(ImDrawList* draw_list, const ImRect& bb, 
 }
 
 
-//#endif // #ifndef IMGUI_DISABLE
+#endif // #ifndef IMGUI_DISABLE

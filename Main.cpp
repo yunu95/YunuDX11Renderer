@@ -1,12 +1,9 @@
-module;
 #include <iostream>
-module main;
-
-import renderCycle;
-import imgui_module;
+#include "RenderCycle.h"
 
 int main()
 {
+    dx11::Context::GetInstance().Init();
     Cycle::InitCycle();
     while(Cycle::UpdateCycle());
     Cycle::CleanUpCycle();
