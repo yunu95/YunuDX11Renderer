@@ -10,8 +10,8 @@ public:
         QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
         QueryPerformanceFrequency((LARGE_INTEGER*)&countsPerSec);
         secondsPerCount = 1.0f / (float)countsPerSec;
-        imgui::InitImgui();
-        dx11::Context::GetInstance().Init();
+        //imgui::InitImgui();
+        dx11::Context::Instance().Init();
     }
     static bool UpdateCycle()
     {
@@ -20,15 +20,15 @@ public:
         QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
         INT64 deltaTime = (currTime - prevTime);
         dt = (float)deltaTime * secondsPerCount;
-        success &= imgui::UpdateImgui();
-        success &= dx11::Context::GetInstance().Update();
+        //success &= imgui::UpdateImgui();
+        success &= dx11::Context::Instance().Update();
 
         return success;
     }
     static bool CleanUpCycle()
     {
         bool success = true;
-        success &= imgui::ImguiCleanUp();
+        //success &= imgui::ImguiCleanUp();
         return success;
     }
 private:

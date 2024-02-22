@@ -49,6 +49,18 @@
     <Filter Include="dx12\context">
       <UniqueIdentifier>{43235ba5-b697-44d1-948a-d471be4cb8b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="primitives">
+      <UniqueIdentifier>{41bc50c0-a639-4039-82df-5ac1d2dcee50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="primitives\Vertex">
+      <UniqueIdentifier>{5749ab13-851e-4153-a70a-bf967fd79644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{3bb1f85d-54fd-4b49-8164-d274e55a8fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\ResourceManager">
+      <UniqueIdentifier>{7f4be354-47ef-47fc-935f-fd141a239484}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp">
@@ -81,13 +93,13 @@
     <ClCompile Include="Main_imgui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D11ResourceManager.cpp">
+      <Filter>dx11\ResourceManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DX11Dependency.h">
       <Filter>DX11Dependency</Filter>
-    </ClInclude>
-    <ClInclude Include="D11Context.h">
-      <Filter>dx11\context</Filter>
     </ClInclude>
     <ClInclude Include="RenderCycle.h">
       <Filter>RenderCycle</Filter>
@@ -101,8 +113,25 @@
     <ClInclude Include="Singleton.h">
       <Filter>Utils\Singleton</Filter>
     </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>primitives\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="D11Context.h">
+      <Filter>dx11\context</Filter>
+    </ClInclude>
     <ClInclude Include="D12Context.h">
       <Filter>dx12\context</Filter>
     </ClInclude>
+    <ClInclude Include="D11ResourceManager.h">
+      <Filter>dx11\ResourceManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="VertexShader.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelShader.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
