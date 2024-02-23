@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <vector>
 #include <fstream>
 #include "Singleton.h"
@@ -8,19 +9,20 @@
 
 namespace dx11
 {
-	class ResourceManager : public Singleton<ResourceManager>
-	{
-	public:
-	private:
-		std::unordered_map<ID3D11VertexShader*, Microsoft::WRL::ComPtr<ID3D11VertexShader>> vertexShaders;
-		std::unordered_map<ID3D11PixelShader*, Microsoft::WRL::ComPtr<ID3D11PixelShader>> pixelShaders;
-		std::unordered_map<ID3D11VertexShader*, Microsoft::WRL::ComPtr<ID3D11InputLayout>> vsInputLayouts;
-		std::unordered_map<ID3D11PixelShader*, Microsoft::WRL::ComPtr<ID3D11InputLayout>> psInputLayouts;
-		std::unordered_map<std::string, ID3D11VertexShader*> vertexShadersByPath;
-		std::unordered_map<std::string, ID3D11PixelShader*> pixelShadersByPath;
+    class ResourceManager : public Singleton<ResourceManager>
+    {
+    public:
+        ID3D11VertexShader* LoadVertexShaderFromFile(const WCHAR* filename);
+        ID3D11PixelShader* LoadPixelShaderFromFile(const WCHAR* filename);
+        ID3D11InputLayout* GetInputLayout(ID3D11VertexShader* shader);
+        //ID3D11PixelShader* LoadPixelShaderFromFile(const char* filename);
+    private:
+        std::unordered_map<ID3D11VertexShader*, Microsoft::WRL::ComPtr<ID3D11VertexShader>> vertexShaders;
+        std::unordered_map<ID3D11PixelShader*, Microsoft::WRL::ComPtr<ID3D11PixelShader>> pixelShaders;
+        std::unordered_map<ID3D11VertexShader*, Microsoft::WRL::ComPtr<ID3D11InputLayout>> inputLayouts;
+        std::unordered_map<std::wstring, ID3D11VertexShader*> vertexShadersByPath;
+        std::unordered_map<std::wstring, ID3D11PixelShader*> pixelShadersByPath;
 
-		ID3D11VertexShader* LoadVertexShaderFromFile(const char* filename);
-		ID3D11PixelShader* LoadPixelShaderFromFile(const char* filename);
-		std::vector<char> LoadFile(const char* filename);
-	};
+        //std::vector<char> LoadFile(const char* filename);
+    };
 }
