@@ -61,6 +61,39 @@
     <Filter Include="dx11\ResourceManager">
       <UniqueIdentifier>{7f4be354-47ef-47fc-935f-fd141a239484}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dx11\Camera">
+      <UniqueIdentifier>{023dccb6-c4ab-4db9-996b-310fff43c22d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SimpleMath">
+      <UniqueIdentifier>{146c410d-6763-4413-a849-527afc14d11c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\cbufferStruct">
+      <UniqueIdentifier>{d81a6ffb-dc43-4573-a389-ed134fb9216b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\cbuffer">
+      <UniqueIdentifier>{69e9baf0-2e65-4813-94b1-cfaf9d0794f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\Transform">
+      <UniqueIdentifier>{ebe6a8e3-fa29-4240-ae91-723c0f9cf21e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{4a29409f-8705-4bd9-86e3-793d11a1ec77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Updatable">
+      <UniqueIdentifier>{9d37379d-02c7-48e6-a849-bff0fe4728f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\RoamingCam">
+      <UniqueIdentifier>{0786583a-bbe2-469d-b0bd-0185efb9615a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\DefaultShader">
+      <UniqueIdentifier>{19df4b87-090b-4a90-bd78-fcbeee22baa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\DebugObject">
+      <UniqueIdentifier>{81ee4c34-35eb-4659-a7f3-f50d61843fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\DebugObject\Grid">
+      <UniqueIdentifier>{f0eef853-9daa-4bf3-9b01-bb324fd83f0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp">
@@ -84,54 +117,95 @@
     <ClCompile Include="ImGui\backends\imgui_impl_win32.cpp">
       <Filter>ImGUI</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="ydMain.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="RenderCycle.cpp">
+    <ClCompile Include="ydRenderCycle.cpp">
       <Filter>RenderCycle</Filter>
     </ClCompile>
-    <ClCompile Include="Main_imgui.cpp">
+    <ClCompile Include="ydMain_imgui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D11ResourceManager.cpp">
+    <ClCompile Include="ydD11ResourceManager.cpp">
       <Filter>dx11\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMath.cpp">
+      <Filter>SimpleMath</Filter>
+    </ClCompile>
+    <ClCompile Include="ydCamera.cpp">
+      <Filter>dx11\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="ydGrid.cpp">
+      <Filter>dx11\DebugObject\Grid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DX11Dependency.h">
+    <ClInclude Include="ydDX11Dependency.h">
       <Filter>DX11Dependency</Filter>
     </ClInclude>
-    <ClInclude Include="RenderCycle.h">
+    <ClInclude Include="ydRenderCycle.h">
       <Filter>RenderCycle</Filter>
     </ClInclude>
-    <ClInclude Include="Snippet.h">
+    <ClInclude Include="ydSnippet.h">
       <Filter>Snippet</Filter>
     </ClInclude>
-    <ClInclude Include="Main_imgui.h">
+    <ClInclude Include="ydMain_imgui.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Singleton.h">
+    <ClInclude Include="ydSingleton.h">
       <Filter>Utils\Singleton</Filter>
     </ClInclude>
-    <ClInclude Include="Vertex.h">
+    <ClInclude Include="ydColoredVertex.h">
       <Filter>primitives\Vertex</Filter>
     </ClInclude>
-    <ClInclude Include="D11Context.h">
+    <ClInclude Include="ydD11Context.h">
       <Filter>dx11\context</Filter>
     </ClInclude>
-    <ClInclude Include="D12Context.h">
+    <ClInclude Include="ydD12Context.h">
       <Filter>dx12\context</Filter>
     </ClInclude>
-    <ClInclude Include="D11ResourceManager.h">
+    <ClInclude Include="ydD11ResourceManager.h">
       <Filter>dx11\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ydCamera.h">
+      <Filter>dx11\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMath.h">
+      <Filter>SimpleMath</Filter>
+    </ClInclude>
+    <ClInclude Include="ydCommonMatrixBuffer.h">
+      <Filter>dx11\cbufferStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="ydTransform.h">
+      <Filter>dx11\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="ydInput.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ydUpdatable.h">
+      <Filter>Updatable</Filter>
+    </ClInclude>
+    <ClInclude Include="ydRoamingCamera.h">
+      <Filter>dx11\RoamingCam</Filter>
+    </ClInclude>
+    <ClInclude Include="ydGrid.h">
+      <Filter>dx11\DebugObject\Grid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="VertexShader.hlsl">
-      <Filter>Shader</Filter>
+    <FxCompile Include="DefaultPixelShader.hlsl">
+      <Filter>Shader\DefaultShader</Filter>
     </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
-      <Filter>Shader</Filter>
+    <FxCompile Include="DefaultVertexShader.hlsl">
+      <Filter>Shader\DefaultShader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SimpleMath.inl">
+      <Filter>SimpleMath</Filter>
+    </None>
+    <None Include="CommonBuffer.hlsli">
+      <Filter>Shader\cbuffer</Filter>
+    </None>
   </ItemGroup>
 </Project>

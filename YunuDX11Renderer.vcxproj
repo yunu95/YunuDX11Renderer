@@ -141,7 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="D11ResourceManager.cpp" />
+    <ClCompile Include="ydCamera.cpp" />
+    <ClCompile Include="ydD11ResourceManager.cpp" />
     <ClCompile Include="ImGui\backends\imgui_impl_dx11.cpp">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
@@ -171,34 +172,48 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
     </ClCompile>
-    <ClCompile Include="Main_imgui.cpp" />
-    <ClCompile Include="RenderCycle.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ydGrid.cpp" />
+    <ClCompile Include="ydMain_imgui.cpp" />
+    <ClCompile Include="ydRenderCycle.cpp" />
+    <ClCompile Include="ydMain.cpp" />
+    <ClCompile Include="SimpleMath.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D11ResourceManager.h" />
-    <ClInclude Include="D12Context.h" />
-    <ClInclude Include="D11Context.h" />
-    <ClInclude Include="DX11Dependency.h" />
-    <ClInclude Include="Main_imgui.h" />
-    <ClInclude Include="RenderCycle.h" />
-    <ClInclude Include="Singleton.h" />
-    <ClInclude Include="Snippet.h" />
-    <ClInclude Include="Vertex.h" />
+    <ClInclude Include="ydGrid.h" />
+    <ClInclude Include="ydRoamingCamera.h" />
+    <ClInclude Include="ydUpdatable.h" />
+    <ClInclude Include="ydCamera.h" />
+    <ClInclude Include="ydCommonMatrixBuffer.h" />
+    <ClInclude Include="ydD11ResourceManager.h" />
+    <ClInclude Include="ydD12Context.h" />
+    <ClInclude Include="ydD11Context.h" />
+    <ClInclude Include="ydDX11Dependency.h" />
+    <ClInclude Include="ydMain_imgui.h" />
+    <ClInclude Include="ydRenderCycle.h" />
+    <ClInclude Include="SimpleMath.h" />
+    <ClInclude Include="ydSingleton.h" />
+    <ClInclude Include="ydSnippet.h" />
+    <ClInclude Include="ydTransform.h" />
+    <ClInclude Include="ydColoredVertex.h" />
+    <ClInclude Include="ydInput.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PixelShader.hlsl">
+    <FxCompile Include="DefaultPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="VertexShader.hlsl">
+    <FxCompile Include="DefaultVertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CommonBuffer.hlsli" />
+    <None Include="SimpleMath.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
