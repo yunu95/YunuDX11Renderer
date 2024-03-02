@@ -11,6 +11,8 @@
 #include "ydRoamingCamera.h"
 #include "ydCommonMatrixBuffer.h"
 #include "ydGrid.h"
+#include "ydDeferredDebugVertex.h"
+#include "yd11DeferredRenderer.h"
 
 
 namespace dx11
@@ -21,17 +23,23 @@ namespace dx11
     {
     public:
         // default window size
-        static constexpr int Window_Width = 800;
-        static constexpr int Window_Height = 800;
+        static unsigned long Window_Width;
+        static unsigned long Window_Height;
         ComPtr<ID3D11Device> device;
         ComPtr<ID3D11DeviceContext> deviceContext;
+        ComPtr<IDXGIFactory> factory;
         ComPtr<IDXGISwapChain> swapChain;
         ComPtr<ID3D11RenderTargetView> renderTargetView;		// 랜더 타겟 뷰
         ComPtr<ID3D11Texture2D> depthStencilBuffer;		// 뎁스 스탠실 버퍼
+
+        //D3D11_VIEWPORT gBufferDebugViewports[6];
+
         ComPtr<ID3D11DepthStencilView> depthStencilView;		// 뎁스 스탠실 뷰
+        ComPtr<ID3D11RasterizerState> rasterizerState;
+        ComPtr<ID3D11DepthStencilState> depthStencilState;
 
         //static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-        int Init()
+        bool Init()
         {
             HINSTANCE hInstance = GetModuleHandle(NULL);
             WNDCLASSEX wc = { 0 };
@@ -43,15 +51,46 @@ namespace dx11
             wc.lpszClassName = L"DirectX11 Tutorial"; // 윈도우 클래스 이름 설정
             RegisterClassEx(&wc); // 윈도우 클래스를 시스템에 등록
 
-            RECT wr = { 0,0,Window_Width,Window_Height }; // 윈도우 사각형 범위 정의
+            RECT wr = { 0,0,static_cast<LONG>(Window_Width),static_cast<LONG>(Window_Height) }; // 윈도우 사각형 범위 정의
             AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE); // adjust the window size based on the desired window style
-            HWND hWnd = CreateWindowEx(NULL, L"DirectX11 Tutorial", L"DirectX 11 Red Screen", WS_OVERLAPPEDWINDOW, 100, 100, wr.right - wr.left, wr.bottom - wr.top, NULL, NULL, hInstance, NULL); // Create the window
+            hWnd = CreateWindowEx(NULL, L"DirectX11 Tutorial", L"DirectX 11 Red Screen", WS_OVERLAPPEDWINDOW, 100, 100, wr.right - wr.left, wr.bottom - wr.top, NULL, NULL, hInstance, NULL); // Create the window
 
             ShowWindow(hWnd, SW_SHOWNORMAL);
             UpdateWindow(hWnd);
 
-            // Direct X11 초기화
+            // 디바이스, 디바이스 콘텍스트, 스왑 체인 생성
+            // 가능한 피처 레벨 목록
+            D3D_FEATURE_LEVEL featureLevels[] = { D3D_FEATURE_LEVEL_11_0,D3D_FEATURE_LEVEL_10_1,D3D_FEATURE_LEVEL_10_0 };
+            D3D_FEATURE_LEVEL featureLevelSupported; // 지원가능한 피처 레벨 저장
+            // dx device, factory 초기화
+            HRESULT hr;
+            hr = D3D11CreateDevice(
+                NULL,
+                D3D_DRIVER_TYPE_HARDWARE,
+                NULL,
+                D3D11_CREATE_DEVICE_DEBUG,
+                featureLevels, 3,
+                D3D11_SDK_VERSION,
+                &device,
+                &featureLevelSupported,
+                &deviceContext);
 
+            hr = CreateDXGIFactory(__uuidof(IDXGIFactory), reinterpret_cast<void**>(factory.GetAddressOf()));
+            assert(SUCCEEDED(hr));
+
+            TestInitCode();
+            DeferredRenderer::Instance().Init();
+            OnResize();
+
+            return true;
+        };
+        // 처음 창이 생성될때, 혹은 창의 크기가 변경될때 호출되는 함수
+        // 스왑체인의 버퍼 크기를 조정하고, 렌더타겟 뷰를 다시 생성해야함.
+        bool OnResize()
+        {
+            if (device.Get() == nullptr)
+                return true;
+            // Direct X11 초기화
             // swap chain description
             DXGI_SWAP_CHAIN_DESC scd
             {
@@ -78,25 +117,23 @@ namespace dx11
                 .SwapEffect = DXGI_SWAP_EFFECT_DISCARD // 버퍼 스왑시 효과
             };
 
-            // 디바이스, 디바이스 콘텍스트, 스왑 체인 생성
-            // 가능한 피처 레벨 목록
-            D3D_FEATURE_LEVEL featureLevels[] = { D3D_FEATURE_LEVEL_11_0,D3D_FEATURE_LEVEL_10_1,D3D_FEATURE_LEVEL_10_0 };
-            D3D_FEATURE_LEVEL featureLevelSupported; // 지원가능한 피처 레벨 저장
-
-            //D3D11CreateDevice();
             HRESULT hr;
-            hr = D3D11CreateDeviceAndSwapChain(
-                NULL,
-                D3D_DRIVER_TYPE_HARDWARE,
-                NULL,
-                NULL,
-                featureLevels, 3,
-                D3D11_SDK_VERSION,
-                &scd,
-                swapChain.GetAddressOf(),
-                device.GetAddressOf(),
-                &featureLevelSupported,
-                deviceContext.GetAddressOf());
+
+            hr = factory->CreateSwapChain(device.Get(), &scd, swapChain.GetAddressOf());
+            assert(SUCCEEDED(hr));
+
+            //hr = D3D11CreateDeviceAndSwapChain(
+            //    NULL,
+            //    D3D_DRIVER_TYPE_HARDWARE,
+            //    NULL,
+            //    D3D11_CREATE_DEVICE_DEBUG,
+            //    featureLevels, 3,
+            //    D3D11_SDK_VERSION,
+            //    &scd,
+            //    swapChain.GetAddressOf(),
+            //    device.GetAddressOf(),
+            //    &featureLevelSupported,
+            //    deviceContext.GetAddressOf());
 
             //hr = D3D11CreateDevice()
             assert(SUCCEEDED(hr));
@@ -124,9 +161,23 @@ namespace dx11
                 .CPUAccessFlags = 0,
                 .MiscFlags = 0
             };
+            device->CreateTexture2D(&depthStencilDesc, nullptr, depthStencilBuffer.GetAddressOf());
+            D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc{
+                .Format = depthStencilDesc.Format,
+                .ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D,
+                .Texture2D = {0}
+            };
+            D3D11_DEPTH_STENCIL_DESC desc{
+                .DepthEnable = TRUE,
+                .DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL,
+                .DepthFunc = D3D11_COMPARISON_LESS,
+                .StencilEnable = FALSE
+            };
 
-            // 렌더 타겟 설정
-            deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+            hr = device->CreateDepthStencilState(&desc, depthStencilState.GetAddressOf());
+            assert(SUCCEEDED(hr));
+            device->CreateDepthStencilView(depthStencilBuffer.Get(), &dsvDesc, depthStencilView.GetAddressOf());
+
 
             // 뷰포트 설정, 여기선 윈도우 크기와 똑같음.
             // 뷰포트는 정규장치 좌표계(NDC)와 렌더타겟 표면과의 관계를 정의한다.
@@ -134,18 +185,22 @@ namespace dx11
             {
                 .TopLeftX = 0,
                 .TopLeftY = 0,
-                .Width = Window_Width,
-                .Height = Window_Height,
+                .Width = static_cast<float>(Window_Width),
+                .Height = static_cast<float>(Window_Height),
+                .MinDepth = 0,
+                .MaxDepth = 1,
             };
             // 레스터라이저는 프리미티브한 애들을 픽셀로 변환해준다. 
             // NDC 공간에서 렌더타겟 표면으로 좌표 사상을 해야 레스터라이징이 가능하기에 뷰포트를 지정해 주는 것.
             deviceContext->RSSetViewports(1, &viewport);
 
-            // 루프에서는 아래 코드 돌리면 됨.
-            //while (GetMessage(&msg, NULL, 0, 0)) { // Get and dispatch messages until a WM_QUIT message is received
-            //    TranslateMessage(&msg); // Translate virtual-key messages into character messages
-            //    DispatchMessage(&msg); // Dispatch a message to a window procedure
-            //};
+            D3D11_RASTERIZER_DESC rasterizerDesc
+            {
+                .FillMode = D3D11_FILL_SOLID,
+                .CullMode = D3D11_CULL_NONE,
+            };
+            device->CreateRasterizerState(&rasterizerDesc, rasterizerState.GetAddressOf());
+
             // 공용 상수 버퍼 초기화
             D3D11_BUFFER_DESC bufferDesc
             {
@@ -155,9 +210,12 @@ namespace dx11
             };
             hr = device->CreateBuffer(&bufferDesc, nullptr, cbufferCommonMatrix.GetAddressOf());
             assert(SUCCEEDED(hr));
-            TestInitCode();
+            if (Camera::GetMainCam())
+                Camera::GetMainCam()->SetResolution(static_cast<float>(Window_Width), static_cast<float>(Window_Height));
+
+            DeferredRenderer::Instance().OnResize();
             return true;
-        };
+        }
         bool UpdateCameraCbuffer()
         {
             assert(Camera::GetMainCam());
@@ -180,6 +238,7 @@ namespace dx11
             deviceContext->VSSetConstantBuffers(0, 1, cbufferCommonMatrix.GetAddressOf());
             return true;
         }
+
         bool Update()
         {
             // 루프에서는 아래 코드 돌리면 됨.
@@ -196,7 +255,11 @@ namespace dx11
                     return false;
             }
             static float resetColor[]{ 0.3f,0.3f,0.3f,1 };
+            // 렌더 타겟 설정
+            deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
             deviceContext->ClearRenderTargetView(renderTargetView.Get(), resetColor);
+            deviceContext->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+            deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 0);
 
             for (auto& each : updatables)
                 each->Update();
@@ -205,7 +268,9 @@ namespace dx11
             UpdateCameraCbuffer();
             // 그리드 출력
             grid->DrawGridAndGuizmo();
-            TestUpdateCode();
+            DeferredRenderer::Instance().RenderStaticMeshes();
+            // 디퍼드 텍스처 이미지를 화면 상단에 출력
+            DeferredRenderer::Instance().DrawDeferredImagesOnTop();
             swapChain->Present(0, 0);
             return true;
         }
@@ -219,6 +284,11 @@ namespace dx11
                 // Redraw the window here
                 // In this case, we don't have anything to draw, so we leave it empty for now
                 break; // Break out of the switch statement
+            case WM_SIZE:
+                Window_Width = LOWORD(lParam);
+                Window_Height = HIWORD(lParam);
+                Context::Instance().OnResize();
+                break;
             }
             return DefWindowProc(hWnd, message, wParam, lParam); // Call the default window procedure for messages that were not handled
         }
@@ -226,18 +296,25 @@ namespace dx11
         {
             auto cam = std::make_unique<RoamingCamera>();
             cam->SetAsMain();
+            cam->SetWorldPostion({ 0,2,-14 });
             updatables.insert(std::move(cam));
             grid = std::make_unique<Grid>();
         }
-        void TestUpdateCode()
+
+        // 삼각형을 그리는데 쓰였던 테스트 코드
+        void TestUpdateCodeTriangle()
         {
+            deviceContext->RSSetState(rasterizerState.Get());
             using namespace dx11;
             using namespace primitives;
             static constexpr ColoredVertex vertices[]
             {
-                {.x=0.0f,.y= 0.5f,.z= 0.0f,.color= {1.0f, 0.0f, 0.0f, 1.0f}},  // Top vertex (red)
-                {.x=0.5f,.y= -0.5f,.z= 0.0f,.color= {0.0f, 1.0f, 0.0f, 1.0f}}, // Bottom-right vertex (green)
-                {.x=-0.5f,.y= -0.5f,.z= 0.0f,.color= {0.0f, 0.0f, 1.0f, 1.0f}} // Bottom-left vertex (blue)
+                {.x = 0.0f,.y = 0.5f,.z = 0.0f,.color = {1.0f, 0.0f, 0.0f, 1.0f}},  // Top vertex (red)
+                {.x = 0.5f,.y = -0.5f,.z = 0.0f,.color = {0.0f, 1.0f, 0.0f, 1.0f}}, // Bottom-right vertex (green)
+                {.x = -0.5f,.y = -0.5f,.z = 0.0f,.color = {0.0f, 0.0f, 1.0f, 1.0f}}, // Bottom-left vertex (blue)
+                {.x = 0.0f,.y = 0.5f,.z = 0.3f,.color = {1.0f, 0.0f, 0.0f, 1.0f}},  // Top vertex (red)
+                {.x = 0.5f,.y = -0.5f,.z = 0.3f,.color = {0.0f, 1.0f, 0.0f, 1.0f}}, // Bottom-right vertex (green)
+                {.x = -0.5f,.y = -0.5f,.z = 0.3f,.color = {0.0f, 0.0f, 1.0f, 1.0f}}, // Bottom-left vertex (blue)
             };
             // Create vertex buffer
             D3D11_BUFFER_DESC bufferDesc = {};
@@ -259,30 +336,24 @@ namespace dx11
             // Set primitive topology
             deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-            static auto vertexShader = ResourceManager::Instance().LoadVertexShaderFromFile(L"DefaultVertexShader.cso");
-            static auto pixelShader = ResourceManager::Instance().LoadPixelShaderFromFile(L"DefaultPixelShader.cso");
-
-            //D3D11_INPUT_ELEMENT_DESC layout[]
-            //{
-            //    {"POSITION",0,DXGI_FORMAT_R32G32B32A32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0},
-            //    {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
-            //};
+            static auto vertexShader = ResourceManager::Instance().LoadVertexShaderFromFile(L"ydColoredVertexShader.cso");
+            static auto pixelShader = ResourceManager::Instance().LoadPixelShaderFromFile(L"ydColoredPixelShader.cso");
 
             ID3D11InputLayout* inputLayout = ResourceManager::Instance().GetInputLayout(vertexShader);
 
-
             deviceContext->IASetInputLayout(inputLayout);
-
             deviceContext->VSSetShader(vertexShader, nullptr, 0);
             deviceContext->PSSetShader(pixelShader, nullptr, 0);
-
-            deviceContext->Draw(3, 0);
-
+            deviceContext->Draw(6, 0);
         }
     private:
+
         std::unordered_set<std::unique_ptr<Updatable>> updatables;
         ComPtr<ID3D11Buffer> cbufferCommonMatrix;
         std::unique_ptr<Grid> grid;
+        HWND hWnd{ 0 };
     };
+    unsigned long Context::Window_Width = 800;
+    unsigned long Context::Window_Height = 800;
 }
 

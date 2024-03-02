@@ -27,7 +27,6 @@ namespace dx11
         ID3D11PixelShader* ps;
         ID3D11InputLayout* inputLayout;
         std::vector<primitives::ColoredVertex> vertices;
-        std::vector<primitives::ColoredVertex> coloredVerticesGuizmo;
         ComPtr<ID3D11Buffer> vertexBuffer;
     };
 }

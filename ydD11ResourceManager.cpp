@@ -1,5 +1,8 @@
 #include "ydD11Context.h"
 #include "ydD11ResourceManager.h"
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 namespace dx11
 {
@@ -83,21 +86,59 @@ namespace dx11
             return itr->second.Get();
         else
             return nullptr;
-
     }
-
-    /*std::vector<char> ResourceManager::LoadFile(const char* filename)
+    const aiScene* ResourceManager::LoadFBXFile(const char* fileName)
     {
-        std::ifstream file(filename, std::ios::binary | std::ios::ate);
-        if (!file.is_open())
+        if (auto itr = aiScenesByPath.find(fileName); itr != aiScenesByPath.end())
+            return itr->second;
+
+        auto importer = std::make_unique<Assimp::Importer>();
+        const aiScene* scene = importer->ReadFile(fileName, aiProcess_Triangulate | aiProcess_FlipUVs);
+
+        assert(!(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) && "Failed to load FBX file");
+
+        for (unsigned int i = 0; i < scene->mNumMeshes; i++)
         {
-            throw std::runtime_error("Failed miserably while opening shader file.");
+            aiMesh* mesh = scene->mMeshes[i];
+            auto staticMesh = std::make_unique<StaticMesh>();
+            // FBX에서 읽어들인 메쉬 정보를 쉐이더에서 쓰게될 메시 데이터로 변환
+            std::vector<StaticMeshVertex> vertices = std::vector<StaticMeshVertex>(mesh->mNumVertices);
+            std::vector<unsigned int> indices = std::vector<unsigned int>(mesh->mNumFaces * 3);
+            for (unsigned int vi = 0; vi < mesh->mNumVertices; vi++)
+            {
+                vertices[vi].pos = { mesh->mVertices[vi].x, mesh->mVertices[vi].y, mesh->mVertices[vi].z };
+                vertices[vi].normal = { mesh->mNormals[vi].x, mesh->mNormals[vi].y, mesh->mNormals[vi].z };
+                if (mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?
+                {
+                    vertices[vi].uv = { mesh->mTextureCoords[0][vi].x, mesh->mTextureCoords[0][vi].y };
+                }
+                else
+                {
+                    vertices[vi].uv = { 0.0f, 0.0f };
+                }
+            }
+            for (unsigned int fi = 0; fi < mesh->mNumFaces; fi++)
+            {
+                assert(mesh->mFaces[fi].mNumIndices == 3);
+                auto face = mesh->mFaces[fi];
+                indices[fi * 3 + 0] = face.mIndices[0];
+                indices[fi * 3 + 1] = face.mIndices[1];
+                indices[fi * 3 + 2] = face.mIndices[2];
+            }
+            staticMesh->SetVertexVec(std::move(vertices));
+            staticMesh->SetIndexVec(std::move(indices));
+            staticMeshesByaiMesh[mesh] = staticMesh.get();
+            staticMeshes[staticMesh.get()] = std::move(staticMesh);
         }
-        size_t size = file.tellg();
-        std::vector<char> bytecode(size);
-        file.seekg(0);
-        file.read(bytecode.data(), size);
-        file.close();
-        return bytecode;
-    }*/
+        aiScenes.insert(scene);
+        aiScenesByPath[fileName] = scene;
+        usedAiImporters.push_back(std::move(importer));
+        return scene;
+    }
+    StaticMesh* ResourceManager::GetMesh(aiMesh* aimesh)
+    {
+        if (auto itr = staticMeshesByaiMesh.find(aimesh); itr != staticMeshesByaiMesh.end())
+            return itr->second;
+        return nullptr;
+    }
 }

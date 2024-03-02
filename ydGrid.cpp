@@ -11,8 +11,8 @@ namespace dx11
             .CullMode = D3D11_CULL_NONE,
         };
         Context::Instance().device->CreateRasterizerState(&rasterizerDesc, rasterizerState.GetAddressOf());
-        vs = ResourceManager::Instance().LoadVertexShaderFromFile(L"DefaultVertexShader.cso");
-        ps = ResourceManager::Instance().LoadPixelShaderFromFile(L"DefaultPixelShader.cso");
+        vs = ResourceManager::Instance().LoadVertexShaderFromFile(L"ydColoredVertexShader.cso");
+        ps = ResourceManager::Instance().LoadPixelShaderFromFile(L"ydColoredPixelShader.cso");
         inputLayout = ResourceManager::Instance().GetInputLayout(vs);
         // 그리드 버텍스
         for (int x = -gridHalfCoverage; x <= gridHalfCoverage; x++)
@@ -44,10 +44,10 @@ namespace dx11
         // 기즈모 버텍스
         vertices.push_back(primitives::ColoredVertex{ .x = 0,.y = 0,.z = 0,.color = {1,0,0,1} });
         vertices.push_back(primitives::ColoredVertex{ .x = 12345,.y = 0,.z = 0,.color = {1,0,0,1} });
-        vertices.push_back(primitives::ColoredVertex{.x= 0,.y=0,.z=0,.color= {0,1,0,1} });
-        vertices.push_back(primitives::ColoredVertex{.x= 0,.y=12345,.z=0,.color= {0,1,0,1} });
-        vertices.push_back(primitives::ColoredVertex{.x= 0,.y=0,.z=0,.color= {0,0,1,1} });
-        vertices.push_back(primitives::ColoredVertex{.x= 0,.y=0,.z=12345,.color= {0,0,1,1} });
+        vertices.push_back(primitives::ColoredVertex{ .x = 0,.y = 0,.z = 0,.color = {0,1,0,1} });
+        vertices.push_back(primitives::ColoredVertex{ .x = 0,.y = 12345,.z = 0,.color = {0,1,0,1} });
+        vertices.push_back(primitives::ColoredVertex{ .x = 0,.y = 0,.z = 0,.color = {0,0,1,1} });
+        vertices.push_back(primitives::ColoredVertex{ .x = 0,.y = 0,.z = 12345,.color = {0,0,1,1} });
         D3D11_BUFFER_DESC bufferDesc = {};
         bufferDesc.Usage = D3D11_USAGE_DEFAULT;
         bufferDesc.ByteWidth = static_cast<UINT>(vertices.size() * sizeof(primitives::ColoredVertex));
@@ -62,6 +62,7 @@ namespace dx11
     }
     void Grid::DrawGridAndGuizmo()
     {
+        Context::Instance().deviceContext->OMSetRenderTargets(1, Context::Instance().renderTargetView.GetAddressOf(), Context::Instance().depthStencilView.Get());
         Context::Instance().deviceContext->RSSetState(rasterizerState.Get());
         Context::Instance().deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
         Context::Instance().deviceContext->IASetInputLayout(inputLayout);

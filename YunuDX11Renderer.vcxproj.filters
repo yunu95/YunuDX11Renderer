@@ -58,9 +58,6 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{3bb1f85d-54fd-4b49-8164-d274e55a8fc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="dx11\ResourceManager">
-      <UniqueIdentifier>{7f4be354-47ef-47fc-935f-fd141a239484}</UniqueIdentifier>
-    </Filter>
     <Filter Include="dx11\Camera">
       <UniqueIdentifier>{023dccb6-c4ab-4db9-996b-310fff43c22d}</UniqueIdentifier>
     </Filter>
@@ -85,38 +82,47 @@
     <Filter Include="dx11\RoamingCam">
       <UniqueIdentifier>{0786583a-bbe2-469d-b0bd-0185efb9615a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\DefaultShader">
-      <UniqueIdentifier>{19df4b87-090b-4a90-bd78-fcbeee22baa0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="dx11\DebugObject">
       <UniqueIdentifier>{81ee4c34-35eb-4659-a7f3-f50d61843fd6}</UniqueIdentifier>
     </Filter>
     <Filter Include="dx11\DebugObject\Grid">
       <UniqueIdentifier>{f0eef853-9daa-4bf3-9b01-bb324fd83f0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dx11\resource">
+      <UniqueIdentifier>{ef8141c6-3c8c-4dcf-8e99-725386fa905d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\resource\Mesh">
+      <UniqueIdentifier>{080f503c-cb3f-43f8-8ed5-c85500d08748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\resource\ResourceManager">
+      <UniqueIdentifier>{7f4be354-47ef-47fc-935f-fd141a239484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="primitives\Vertex\ColoredVertex">
+      <UniqueIdentifier>{41c2f34e-312b-4ef7-b230-52196fa44aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="primitives\Vertex\StaticMeshVertex">
+      <UniqueIdentifier>{75499bcf-2ed4-462e-89e1-4ec0a617a06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\ColoredShader">
+      <UniqueIdentifier>{19df4b87-090b-4a90-bd78-fcbeee22baa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\DefaultPixelShader">
+      <UniqueIdentifier>{1a9fc154-3c6d-4e27-b66a-1d6dc0dd4b58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\gBufferDebugShdaer">
+      <UniqueIdentifier>{6d35755b-87f2-482d-aaa3-832ddc073161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\gBuffer">
+      <UniqueIdentifier>{4379fc91-d1bb-438a-ac58-157a577c6560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="primitives\Vertex\DeferredDebugVertex">
+      <UniqueIdentifier>{768e3319-0771-4561-8e3a-abd46e1d7a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\DeferredRenderer">
+      <UniqueIdentifier>{84755698-3cde-407d-88e8-f04c877e677e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ImGui\imgui.cpp">
-      <Filter>ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_demo.cpp">
-      <Filter>ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_draw.cpp">
-      <Filter>ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_tables.cpp">
-      <Filter>ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_widgets.cpp">
-      <Filter>ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\backends\imgui_impl_dx11.cpp">
-      <Filter>ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\backends\imgui_impl_win32.cpp">
-      <Filter>ImGUI</Filter>
-    </ClCompile>
     <ClCompile Include="ydMain.cpp">
       <Filter>Main</Filter>
     </ClCompile>
@@ -127,7 +133,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ydD11ResourceManager.cpp">
-      <Filter>dx11\ResourceManager</Filter>
+      <Filter>dx11\resource\ResourceManager</Filter>
     </ClCompile>
     <ClCompile Include="SimpleMath.cpp">
       <Filter>SimpleMath</Filter>
@@ -137,6 +143,33 @@
     </ClCompile>
     <ClCompile Include="ydGrid.cpp">
       <Filter>dx11\DebugObject\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\ImGui\imgui.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\ImGui\imgui_demo.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\ImGui\imgui_draw.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\ImGui\imgui_tables.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\ImGui\imgui_widgets.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\ImGui\backends\imgui_impl_dx11.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\ImGui\backends\imgui_impl_win32.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="yd11StaticMesh.cpp">
+      <Filter>dx11\resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="yd11DeferredRenderer.cpp">
+      <Filter>dx11\DeferredRenderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +188,6 @@
     <ClInclude Include="ydSingleton.h">
       <Filter>Utils\Singleton</Filter>
     </ClInclude>
-    <ClInclude Include="ydColoredVertex.h">
-      <Filter>primitives\Vertex</Filter>
-    </ClInclude>
     <ClInclude Include="ydD11Context.h">
       <Filter>dx11\context</Filter>
     </ClInclude>
@@ -165,7 +195,7 @@
       <Filter>dx12\context</Filter>
     </ClInclude>
     <ClInclude Include="ydD11ResourceManager.h">
-      <Filter>dx11\ResourceManager</Filter>
+      <Filter>dx11\resource\ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="ydCamera.h">
       <Filter>dx11\Camera</Filter>
@@ -191,13 +221,40 @@
     <ClInclude Include="ydGrid.h">
       <Filter>dx11\DebugObject\Grid</Filter>
     </ClInclude>
+    <ClInclude Include="yd11StaticMesh.h">
+      <Filter>dx11\resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="ydColoredVertex.h">
+      <Filter>primitives\Vertex\ColoredVertex</Filter>
+    </ClInclude>
+    <ClInclude Include="ydStaticMeshVertex.h">
+      <Filter>primitives\Vertex\StaticMeshVertex</Filter>
+    </ClInclude>
+    <ClInclude Include="ydDeferredDebugVertex.h">
+      <Filter>primitives\Vertex\DeferredDebugVertex</Filter>
+    </ClInclude>
+    <ClInclude Include="yd11DeferredRenderer.h">
+      <Filter>dx11\DeferredRenderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="DefaultPixelShader.hlsl">
-      <Filter>Shader\DefaultShader</Filter>
+    <FxCompile Include="ydColoredPixelShader.hlsl">
+      <Filter>Shader\ColoredShader</Filter>
     </FxCompile>
-    <FxCompile Include="DefaultVertexShader.hlsl">
-      <Filter>Shader\DefaultShader</Filter>
+    <FxCompile Include="ydColoredVertexShader.hlsl">
+      <Filter>Shader\ColoredShader</Filter>
+    </FxCompile>
+    <FxCompile Include="ydStaticMeshPixelShader.hlsl">
+      <Filter>Shader\DefaultPixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="ydStaticMeshVertexShader.hlsl">
+      <Filter>Shader\DefaultPixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="ydGBufferDebugVertexShader.hlsl">
+      <Filter>Shader\gBufferDebugShdaer</Filter>
+    </FxCompile>
+    <FxCompile Include="ydGBufferDebugPixelShader.hlsl">
+      <Filter>Shader\gBufferDebugShdaer</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +263,9 @@
     </None>
     <None Include="CommonBuffer.hlsli">
       <Filter>Shader\cbuffer</Filter>
+    </None>
+    <None Include="gBuffers.hlsli">
+      <Filter>Shader\gBuffer</Filter>
     </None>
   </ItemGroup>
 </Project>
