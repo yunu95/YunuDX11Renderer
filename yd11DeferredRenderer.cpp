@@ -1,4 +1,5 @@
 #include "yd11DeferredRenderer.h"
+#include "yd11Texture.h"
 #include "ydD11Context.h"
 
 namespace dx11
@@ -85,13 +86,17 @@ namespace dx11
     }
     void DeferredRenderer::RenderStaticMeshes()
     {
+        static auto arm = ResourceManager::Instance().LoadTexture(L"T_Hat_ARM.png");
+        static auto albedo = ResourceManager::Instance().LoadTexture(L"T_Hat_BaseColor.png");
+        static auto normal = ResourceManager::Instance().LoadTexture(L"T_Hat_Normal.png");
         static auto vertexShader = ResourceManager::Instance().LoadVertexShaderFromFile(L"ydStaticMeshVertexShader.cso");
         static auto pixelShader = ResourceManager::Instance().LoadPixelShaderFromFile(L"ydStaticMeshPixelShader.cso");
 
-        static constexpr ID3D11ShaderResourceView* nullSRVs[gBufferCount] = { nullptr };
+        static ID3D11ShaderResourceView* materialSRVs[3] = { albedo->srv.Get(),normal->srv.Get(),arm->srv.Get() };
         for (auto& each : gBufferRTVs)
             Context::Instance().deviceContext->ClearRenderTargetView(each, Color{ 0,0,0,0 });
-        Context::Instance().deviceContext->PSSetShaderResources(0, 6, nullSRVs);
+        Context::Instance().deviceContext->PSSetShaderResources(0, 3, materialSRVs);
+        Context::Instance().deviceContext->PSSetShaderResources(0, 3, materialSRVs);
 
         Context::Instance().deviceContext->OMSetRenderTargets(gBufferCount, gBufferRTVs, Context::Instance().depthStencilView.Get());
         Context::Instance().deviceContext->IASetInputLayout(ResourceManager::Instance().GetInputLayout(vertexShader));
@@ -136,6 +141,9 @@ namespace dx11
         Context::Instance().deviceContext->PSSetShader(ps, nullptr, 0);
         Context::Instance().deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
         Context::Instance().deviceContext->Draw(6 * 6, 0);
+
+        static ID3D11ShaderResourceView* nullSRVs[gBufferCount] = { nullptr };
+        Context::Instance().deviceContext->PSSetShaderResources(0, 6, nullSRVs);
         return true;
     }
     ComPtr<ID3D11Texture2D> DeferredRenderer::CreateGBuffer(DXGI_FORMAT format)

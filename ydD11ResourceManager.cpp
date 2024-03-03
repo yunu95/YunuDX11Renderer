@@ -1,5 +1,7 @@
 #include "ydD11Context.h"
 #include "ydD11ResourceManager.h"
+#include "DirectXTex/DirectXTex.h"
+#include "yd11Texture.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -80,6 +82,18 @@ namespace dx11
         pixelShadersByPath[filename] = pixelShader;
         return pixelShader;
     }
+    Texture* ResourceManager::LoadTexture(const WCHAR* filename)
+    {
+        if (auto textureFound = texturesByPath.find(filename); textureFound != texturesByPath.end())
+            return textureFound->second.get();
+        auto texture = std::make_unique<Texture>();
+        DirectX::ScratchImage scratchImage;
+        DirectX::TexMetadata metadata;
+        DirectX::LoadFromWICFile(filename, DirectX::WIC_FLAGS_NONE, &metadata, scratchImage);
+        DirectX::CreateShaderResourceView(Context::Instance().device.Get(), scratchImage.GetImages(), scratchImage.GetImageCount(), metadata, texture->srv.GetAddressOf());
+        texturesByPath[filename] = std::move(texture);
+        return texturesByPath[filename].get();
+    }
     ID3D11InputLayout* ResourceManager::GetInputLayout(ID3D11VertexShader* shader)
     {
         if (auto itr = inputLayouts.find(shader); itr != inputLayouts.end())
@@ -108,13 +122,19 @@ namespace dx11
             {
                 vertices[vi].pos = { mesh->mVertices[vi].x, mesh->mVertices[vi].y, mesh->mVertices[vi].z };
                 vertices[vi].normal = { mesh->mNormals[vi].x, mesh->mNormals[vi].y, mesh->mNormals[vi].z };
+
+                std::vector<std::string> uvNames;
                 if (mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?
                 {
-                    vertices[vi].uv = { mesh->mTextureCoords[0][vi].x, mesh->mTextureCoords[0][vi].y };
+                    vertices[vi].uvAlbedo = { mesh->mTextureCoords[0][vi].x, mesh->mTextureCoords[0][vi].y };
+                    vertices[vi].uvNormal = vertices[vi].uvAlbedo;
+                    vertices[vi].uvAO = vertices[vi].uvAlbedo;
+                    vertices[vi].uvRoughness = vertices[vi].uvAlbedo;
+                    vertices[vi].uvMetallic = vertices[vi].uvAlbedo;
                 }
                 else
                 {
-                    vertices[vi].uv = { 0.0f, 0.0f };
+                    vertices[vi].uvAlbedo = { 0.0f, 0.0f };
                 }
             }
             for (unsigned int fi = 0; fi < mesh->mNumFaces; fi++)
