@@ -130,6 +130,9 @@
     <Filter Include="dx11\resource\Texture">
       <UniqueIdentifier>{3f7ebe9e-fb55-40ea-9321-11d9d70b90b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\gBufferMergeShader">
+      <UniqueIdentifier>{5b2ace35-d425-47f1-bd93-0d5c7b54587c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ydMain.cpp">
@@ -270,6 +273,12 @@
     </FxCompile>
     <FxCompile Include="ydGBufferDebugPixelShader.hlsl">
       <Filter>Shader\gBufferDebugShdaer</Filter>
+    </FxCompile>
+    <FxCompile Include="ydGBufferMergeVS.hlsl">
+      <Filter>Shader\gBufferMergeShader</Filter>
+    </FxCompile>
+    <FxCompile Include="ydGBufferMergePS.hlsl">
+      <Filter>Shader\gBufferMergeShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
