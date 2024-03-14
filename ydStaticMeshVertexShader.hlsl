@@ -28,8 +28,8 @@ PixelInput main(VertexInput input)
     PixelInput output;
     output.position = mul(float4(input.position, 1), viewMatrix);
     output.position = mul(output.position, projectionMatrix);
-    output.worldPosition = input.position;
-    output.normal = input.normal;
+    output.worldPosition = mul(float4(input.position, 1), viewMatrix);
+    output.normal = mul(float4(input.normal, 0), viewMatrix);
     output.uv_albedo = input.uv_albedo;
     output.uv_normal = input.uv_normal;
     output.uv_metallic = input.uv_metallic;

@@ -8,7 +8,15 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include "SimpleMath.h"
+#include <memory>
+#include <vector>
+#include <unordered_map>
+#include <unordered_set>
+#include <array>
+
 namespace dx11
 {
     using namespace Microsoft::WRL;
+    using namespace DirectX::SimpleMath;
+    using namespace std;
 }

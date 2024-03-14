@@ -158,7 +158,9 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
     <ClCompile Include="Include\ImGui\imgui_draw.cpp" />
     <ClCompile Include="Include\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Include\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="yd11DeferredRenderer.cpp" />
+    <ClCompile Include="StaticMeshRenderer.cpp" />
+    <ClCompile Include="yd11DeferredContext.cpp" />
+    <ClCompile Include="yd11Material.cpp" />
     <ClCompile Include="yd11StaticMesh.cpp" />
     <ClCompile Include="ydCamera.cpp" />
     <ClCompile Include="ydD11ResourceManager.cpp" />
@@ -169,9 +171,10 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
     <ClCompile Include="SimpleMath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="StaticMeshRenderer.h" />
     <ClInclude Include="yd11Material.h" />
     <ClInclude Include="yd11Texture.h" />
-    <ClInclude Include="yd11DeferredRenderer.h" />
+    <ClInclude Include="yd11DeferredContext.h" />
     <ClInclude Include="ydDeferredDebugVertex.h" />
     <ClInclude Include="ydStaticMeshVertex.h" />
     <ClInclude Include="ydGrid.h" />
@@ -194,6 +197,18 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
     <ClInclude Include="ydInput.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="MergeTextureByDepthPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="MergeTextureByDepthVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="ydColoredPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

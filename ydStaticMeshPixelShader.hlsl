@@ -1,3 +1,4 @@
+#include "CommonBuffer.hlsli"
 #include "ydMaterialBuffers.hlsli"
 
 struct PixelInput
@@ -16,9 +17,9 @@ struct PixelOutput
     float4 position : SV_TARGET0;
     float4 normal : SV_TARGET1;
     float4 albedo : SV_TARGET2;
-    float4 metallic : SV_TARGET3; // Metallic에다가 그냥 ARM 다 때려박는게 낫겟다.
-    float4 roughness : SV_TARGET4;
-    float4 ambientOcclusion : SV_TARGET5;
+    float4 arm : SV_TARGET3; // Metallic에다가 그냥 ARM 다 때려박는게 낫겟다.
+    //float4 roughness : SV_TARGET4;
+    //float4 ambientOcclusion : SV_TARGET5;
 };
 PixelOutput main(PixelInput input)
 {
@@ -26,9 +27,10 @@ PixelOutput main(PixelInput input)
     output.position = float4(input.worldPosition, 1);
     output.normal = float4(input.normal, 1);
     output.albedo = albedoMap.Sample(materialSampler, input.uv_albedo);
-    output.normal = normalMap.Sample(materialSampler, input.uv_normal);
-    output.metallic = ARMMap.Sample(materialSampler, input.uv_metallic);
-    output.roughness = float4(output.metallic.g, 0, 0, 1);
-    output.ambientOcclusion = float4(output.metallic.r, 0, 0, 1);
+    //output.normal = normalMap.Sample(materialSampler, input.uv_normal);
+    //output.metallic = ;
+    //output.roughness = ;
+    output.arm = ARMMap.Sample(materialSampler, input.uv_metallic);
+    //output.arm = float4(output.metallic.r, float4(output.metallic.g, 0, 0, 1), ARMMap.Sample(materialSampler, input.uv_metallic), 1);
     return output;
 }

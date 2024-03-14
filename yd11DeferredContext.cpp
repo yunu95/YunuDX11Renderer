@@ -1,10 +1,10 @@
-#include "yd11DeferredRenderer.h"
+#include "yd11DeferredContext.h"
 #include "yd11Texture.h"
 #include "ydD11Context.h"
 
 namespace dx11
 {
-    bool DeferredRenderer::Init()
+    bool DeferredContext::Init()
     {
         // Define a sampler state description
         D3D11_SAMPLER_DESC samplerDesc = {};
@@ -27,42 +27,47 @@ namespace dx11
         assert(SUCCEEDED(hr));
         return true;
     }
-    bool DeferredRenderer::OnResize()
+    bool DeferredContext::OnResize()
     {
         gBufferPosition = CreateGBuffer(DXGI_FORMAT_R32G32B32A32_FLOAT);
         gBufferNormal = CreateGBuffer(DXGI_FORMAT_R32G32B32A32_FLOAT);
         gBufferAlbedo = CreateGBuffer(DXGI_FORMAT_R8G8B8A8_UNORM);
-        gBufferMetallic = CreateGBuffer(DXGI_FORMAT_R8_UNORM);
-        gBufferRoughness = CreateGBuffer(DXGI_FORMAT_R8_UNORM);
-        gBufferAmbientOcclusion = CreateGBuffer(DXGI_FORMAT_R8G8B8A8_UNORM);
+        gBufferARM = CreateGBuffer(DXGI_FORMAT_R8G8B8A8_UNORM);
+        //gBufferMetallic = CreateGBuffer(DXGI_FORMAT_R8_UNORM);
+        //gBufferRoughness = CreateGBuffer(DXGI_FORMAT_R8_UNORM);
+        //gBufferAmbientOcclusion = CreateGBuffer(DXGI_FORMAT_R8G8B8A8_UNORM);
         Context::Instance().device->CreateRenderTargetView(gBufferPosition.Get(), nullptr, gBufferViewPosition.GetAddressOf());
         Context::Instance().device->CreateRenderTargetView(gBufferNormal.Get(), nullptr, gBufferViewNormal.GetAddressOf());
         Context::Instance().device->CreateRenderTargetView(gBufferAlbedo.Get(), nullptr, gBufferViewAlbedo.GetAddressOf());
-        Context::Instance().device->CreateRenderTargetView(gBufferMetallic.Get(), nullptr, gBufferViewMetallic.GetAddressOf());
+        Context::Instance().device->CreateRenderTargetView(gBufferARM.Get(), nullptr, gBufferViewARM.GetAddressOf());
+        /*Context::Instance().device->CreateRenderTargetView(gBufferMetallic.Get(), nullptr, gBufferViewMetallic.GetAddressOf());
         Context::Instance().device->CreateRenderTargetView(gBufferRoughness.Get(), nullptr, gBufferViewRoughness.GetAddressOf());
-        Context::Instance().device->CreateRenderTargetView(gBufferAmbientOcclusion.Get(), nullptr, gBufferViewAmbientOcclusion.GetAddressOf());
+        Context::Instance().device->CreateRenderTargetView(gBufferAmbientOcclusion.Get(), nullptr, gBufferViewAmbientOcclusion.GetAddressOf());*/
         Context::Instance().device->CreateShaderResourceView(gBufferPosition.Get(), nullptr, gBufferSRVPosition.GetAddressOf());
         Context::Instance().device->CreateShaderResourceView(gBufferNormal.Get(), nullptr, gBufferSRVNormal.GetAddressOf());
         Context::Instance().device->CreateShaderResourceView(gBufferAlbedo.Get(), nullptr, gBufferSRVAlbedo.GetAddressOf());
-        Context::Instance().device->CreateShaderResourceView(gBufferMetallic.Get(), nullptr, gBufferSRVMetallic.GetAddressOf());
+        Context::Instance().device->CreateShaderResourceView(gBufferARM.Get(), nullptr, gBufferSRVARM.GetAddressOf());
+        /*Context::Instance().device->CreateShaderResourceView(gBufferMetallic.Get(), nullptr, gBufferSRVMetallic.GetAddressOf());
         Context::Instance().device->CreateShaderResourceView(gBufferRoughness.Get(), nullptr, gBufferSRVRoughness.GetAddressOf());
-        Context::Instance().device->CreateShaderResourceView(gBufferAmbientOcclusion.Get(), nullptr, gBufferSRVAmbientOcclusion.GetAddressOf());
+        Context::Instance().device->CreateShaderResourceView(gBufferAmbientOcclusion.Get(), nullptr, gBufferSRVAmbientOcclusion.GetAddressOf());*/
 
         gBufferRTVs[0] = gBufferViewPosition.Get();
         gBufferRTVs[1] = gBufferViewNormal.Get();
         gBufferRTVs[2] = gBufferViewAlbedo.Get();
-        gBufferRTVs[3] = gBufferViewMetallic.Get();
+        gBufferRTVs[3] = gBufferViewARM.Get();
+        /*gBufferRTVs[3] = gBufferViewMetallic.Get();
         gBufferRTVs[4] = gBufferViewRoughness.Get();
-        gBufferRTVs[5] = gBufferViewAmbientOcclusion.Get();
+        gBufferRTVs[5] = gBufferViewAmbientOcclusion.Get();*/
 
         gBufferSRVs[0] = gBufferSRVPosition.Get();
         gBufferSRVs[1] = gBufferSRVNormal.Get();
         gBufferSRVs[2] = gBufferSRVAlbedo.Get();
-        gBufferSRVs[3] = gBufferSRVMetallic.Get();
+        gBufferSRVs[3] = gBufferSRVARM.Get();
+        /*gBufferSRVs[3] = gBufferSRVMetallic.Get();
         gBufferSRVs[4] = gBufferSRVRoughness.Get();
-        gBufferSRVs[5] = gBufferSRVAmbientOcclusion.Get();
+        gBufferSRVs[5] = gBufferSRVAmbientOcclusion.Get();*/
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < gBufferCount; i++)
         {
             deferredDebugVertices[i * 6 + 0] = { .x = -1 + gBufferDebugViewportScale * i,.y = 1 - gBufferDebugViewportScale ,.u = 0,.v = 1,.textureIndex = i };
             deferredDebugVertices[i * 6 + 1] = { .x = -1 + gBufferDebugViewportScale * i,.y = 1,.u = 0,.v = 0,.textureIndex = i };
@@ -84,7 +89,7 @@ namespace dx11
 
         return true;
     }
-    void DeferredRenderer::RenderStaticMeshes()
+    void DeferredContext::RenderStaticMeshes()
     {
         static auto arm = ResourceManager::Instance().LoadTexture(L"T_Hat_ARM.png");
         static auto albedo = ResourceManager::Instance().LoadTexture(L"T_Hat_BaseColor.png");
@@ -106,7 +111,7 @@ namespace dx11
         auto fbxScene = ResourceManager::Instance().LoadFBXFile("SM_Hat02.fbx");
         TestDrawNodeRecursively(fbxScene->mRootNode, fbxScene);
     }
-    void DeferredRenderer::TestDrawNodeRecursively(aiNode* node, const aiScene* scene)
+    void DeferredContext::TestDrawNodeRecursively(aiNode* node, const aiScene* scene)
     {
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
@@ -121,7 +126,7 @@ namespace dx11
             TestDrawNodeRecursively(node->mChildren[i], scene);
         }
     }
-    bool DeferredRenderer::DrawDeferredImagesOnTop()
+    bool DeferredContext::DrawDeferredImagesOnTop()
     {
         auto vs = ResourceManager::Instance().LoadVertexShaderFromFile(L"ydGBufferDebugVertexShader.cso");
         auto ps = ResourceManager::Instance().LoadPixelShaderFromFile(L"ydGBufferDebugPixelShader.cso");
@@ -133,20 +138,20 @@ namespace dx11
         Context::Instance().deviceContext->ClearDepthStencilView(Context::Instance().depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
         Context::Instance().deviceContext->OMSetRenderTargets(1, Context::Instance().renderTargetView.GetAddressOf(), Context::Instance().depthStencilView.Get());
 
-        Context::Instance().deviceContext->PSSetShaderResources(0, 6, gBufferSRVs);
+        Context::Instance().deviceContext->PSSetShaderResources(0, gBufferCount, gBufferSRVs);
 
         Context::Instance().deviceContext->PSSetSamplers(0, 1, samplerState.GetAddressOf());
         Context::Instance().deviceContext->IASetVertexBuffers(0, 1, deferredDebugVerticesBuffer.GetAddressOf(), &stride, &offset);
         Context::Instance().deviceContext->VSSetShader(vs, nullptr, 0);
         Context::Instance().deviceContext->PSSetShader(ps, nullptr, 0);
         Context::Instance().deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-        Context::Instance().deviceContext->Draw(6 * 6, 0);
+        Context::Instance().deviceContext->Draw(6 * gBufferCount, 0);
 
         static ID3D11ShaderResourceView* nullSRVs[gBufferCount] = { nullptr };
-        Context::Instance().deviceContext->PSSetShaderResources(0, 6, nullSRVs);
+        Context::Instance().deviceContext->PSSetShaderResources(0, gBufferCount, nullSRVs);
         return true;
     }
-    ComPtr<ID3D11Texture2D> DeferredRenderer::CreateGBuffer(DXGI_FORMAT format)
+    ComPtr<ID3D11Texture2D> DeferredContext::CreateGBuffer(DXGI_FORMAT format)
     {
         D3D11_TEXTURE2D_DESC desc{
             .Width = Context::Instance().Window_Width,

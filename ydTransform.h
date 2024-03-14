@@ -87,6 +87,4 @@ namespace dx11
         mutable DirectX::SimpleMath::Quaternion cachedRotation{ DirectX::SimpleMath::Quaternion::Identity };
         mutable DirectX::SimpleMath::Matrix wtm;
     };
-
-
 }

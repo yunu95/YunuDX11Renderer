@@ -21,10 +21,13 @@ namespace dx11
         unsigned int GetIndexCount() { return indexCount; };*/
         void SetVertexVec(const std::vector<StaticMeshVertex>& vertexVec);
         void SetIndexVec(const std::vector<unsigned int>& indexVec);
+        void SetAiMesh(aiMesh* aimesh);
+        aiMesh* GetaiMesh();
     private:
         std::vector<unsigned int> indexVec;
         Microsoft::WRL::ComPtr<ID3D11Buffer> vertexBuffer;
         Microsoft::WRL::ComPtr<ID3D11Buffer> indexBuffer;
+        aiMesh* aimesh{ nullptr };
         unsigned int vertexCount{ 0 };
         unsigned int indexCount{ 0 };
 

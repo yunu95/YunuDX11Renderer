@@ -2,6 +2,7 @@
 #include "ydD11ResourceManager.h"
 #include "DirectXTex/DirectXTex.h"
 #include "yd11Texture.h"
+#include "yd11Material.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -147,6 +148,7 @@ namespace dx11
             }
             staticMesh->SetVertexVec(std::move(vertices));
             staticMesh->SetIndexVec(std::move(indices));
+            staticMesh->SetAiMesh(mesh);
             staticMeshesByaiMesh[mesh] = staticMesh.get();
             staticMeshes[staticMesh.get()] = std::move(staticMesh);
         }
@@ -160,5 +162,10 @@ namespace dx11
         if (auto itr = staticMeshesByaiMesh.find(aimesh); itr != staticMeshesByaiMesh.end())
             return itr->second;
         return nullptr;
+    }
+    Material* ResourceManager::CreateMaterial()
+    {
+        auto material= materials.insert(make_shared<Material>());
+        return material.first->get();
     }
 }

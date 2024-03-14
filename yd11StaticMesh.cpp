@@ -30,4 +30,12 @@ namespace dx11
         Context::Instance().device->CreateBuffer(&bufferDesc, &initData, indexBuffer.GetAddressOf());
         indexCount = static_cast<UINT>(indexVec.size());
     };
+    void StaticMesh::SetAiMesh(aiMesh* aimesh)
+    {
+        this->aimesh = aimesh;
+    }
+    aiMesh* StaticMesh::GetaiMesh()
+    {
+        return aimesh;
+    }
 }

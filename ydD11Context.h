@@ -12,7 +12,7 @@
 #include "ydCommonMatrixBuffer.h"
 #include "ydGrid.h"
 #include "ydDeferredDebugVertex.h"
-#include "yd11DeferredRenderer.h"
+#include "yd11DeferredContext.h"
 
 
 namespace dx11
@@ -79,7 +79,7 @@ namespace dx11
             assert(SUCCEEDED(hr));
 
             TestInitCode();
-            DeferredRenderer::Instance().Init();
+            DeferredContext::Instance().Init();
             OnResize();
 
             return true;
@@ -213,7 +213,7 @@ namespace dx11
             if (Camera::GetMainCam())
                 Camera::GetMainCam()->SetResolution(static_cast<float>(Window_Width), static_cast<float>(Window_Height));
 
-            DeferredRenderer::Instance().OnResize();
+            DeferredContext::Instance().OnResize();
             return true;
         }
         bool UpdateCameraCbuffer()
@@ -268,9 +268,9 @@ namespace dx11
             UpdateCameraCbuffer();
             // 그리드 출력
             grid->DrawGridAndGuizmo();
-            DeferredRenderer::Instance().RenderStaticMeshes();
+            DeferredContext::Instance().RenderStaticMeshes();
             // 디퍼드 텍스처 이미지를 화면 상단에 출력
-            DeferredRenderer::Instance().DrawDeferredImagesOnTop();
+            DeferredContext::Instance().DrawDeferredImagesOnTop();
             swapChain->Present(0, 0);
             return true;
         }
