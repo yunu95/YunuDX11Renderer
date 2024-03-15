@@ -2,7 +2,6 @@
 #include "ydDX11Dependency.h"
 #include "ydSingleton.h"
 #include "ydDeferredDebugVertex.h"
-#include "ydDeferredLightVertex.h"
 
 namespace dx11
 {
@@ -43,7 +42,7 @@ namespace dx11
         //ComPtr<ID3D11DepthStencilState> depthStencilState;        // 뎁스 스탠실 스테이트
 
         ComPtr<ID3D11Buffer> debugGbufferVerticesBuffer;
-        ComPtr<ID3D11Buffer> lightVerticesBuffer;
-        ComPtr<ID3D11SamplerState> samplerState;
+        //ComPtr<ID3D11Buffer> lightVerticesBuffer;
+        //ComPtr<ID3D11SamplerState> samplerState;
     };
 }

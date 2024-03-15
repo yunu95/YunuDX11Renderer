@@ -159,6 +159,7 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
     <ClCompile Include="Include\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Include\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="StaticMeshRenderer.cpp" />
+    <ClCompile Include="yd11CubeMap.cpp" />
     <ClCompile Include="yd11DeferredContext.cpp" />
     <ClCompile Include="yd11Material.cpp" />
     <ClCompile Include="yd11StaticMesh.cpp" />
@@ -179,7 +180,7 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
     <ClInclude Include="yd11Texture.h" />
     <ClInclude Include="yd11DeferredContext.h" />
     <ClInclude Include="ydDeferredDebugVertex.h" />
-    <ClInclude Include="ydDeferredLightVertex.h" />
+    <ClInclude Include="ydScreenPosUVVertex.h" />
     <ClInclude Include="ydStaticMeshVertex.h" />
     <ClInclude Include="ydGrid.h" />
     <ClInclude Include="yd11StaticMesh.h" />
@@ -282,6 +283,7 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
     </FxCompile>
     <None Include="gBuffers.hlsli" />
     <None Include="SimpleMath.inl" />
+    <None Include="UVScreenPrimitives.hlsli" />
     <None Include="ydMaterialBuffers.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,16 +1,6 @@
-struct VS_INPUT
-{
-    float2 position : POSITION; // Screen space coordinates
-    float2 uv : TEXCOORD;
-};
+#include "UVScreenPrimitives.hlsli"
 
-struct PS_INPUT
-{
-    float4 position : SV_POSITION;
-    float2 uv : TEXCOORD;
-};
-
-PS_INPUT main(VS_INPUT input) 
+PS_INPUT main(VS_INPUT input)
 {
     PS_INPUT output;
     output.position = float4(input.position, 0, 1);

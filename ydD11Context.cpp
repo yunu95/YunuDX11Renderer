@@ -44,6 +44,60 @@ namespace dx11
         DeferredContext::Instance().Init();
         OnResize();
 
+
+        // 스크린 포지션 유브이 버텍스 버퍼 생성
+        primitives::ScreenPosUVVertex vertices[4]
+        {
+            {.x = -1,.y = -1,.u = 0,.v = 1},
+            {.x = -1,.y = 1,.u = 0,.v = 0},
+            {.x = 1,.y = 1,.u = 1,.v = 0},
+            {.x = 1,.y = -1,.u = 1,.v = 1},
+        };
+        unsigned int indices[6]{ 0,1,2,0,2,3 };
+
+        // 버텍스 버퍼 생성
+        {
+            D3D11_BUFFER_DESC bufferDesc = {};
+            bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+            bufferDesc.ByteWidth = sizeof(vertices);
+            bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+            bufferDesc.CPUAccessFlags = 0;
+            D3D11_SUBRESOURCE_DATA initData = { .pSysMem = vertices };
+
+            Context::Instance().device->CreateBuffer(&bufferDesc, &initData, screenPosUVVertexBuffer.GetAddressOf());
+        }
+        // 인덱스 버퍼 생성
+        {
+            D3D11_BUFFER_DESC bufferDesc = {};
+            bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+            bufferDesc.ByteWidth = sizeof(indices);
+            bufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+            bufferDesc.CPUAccessFlags = 0;
+            D3D11_SUBRESOURCE_DATA initData = { .pSysMem = indices };
+
+            Context::Instance().device->CreateBuffer(&bufferDesc, &initData, screenPosUVIndexBuffer.GetAddressOf());
+        }
+
+        // 스크린 포지션 UV 샘플러 상태 생성
+        D3D11_SAMPLER_DESC samplerDesc = {};
+        samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // Example filter mode
+        samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP; // Example addressing mode for U coordinate
+        samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP; // Example addressing mode for V coordinate
+        samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP; // Example addressing mode for W coordinate
+        samplerDesc.MipLODBias = 0.0f;
+        samplerDesc.MaxAnisotropy = 1;
+        samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+        samplerDesc.BorderColor[0] = 0;
+        samplerDesc.BorderColor[1] = 0;
+        samplerDesc.BorderColor[2] = 0;
+        samplerDesc.BorderColor[3] = 0;
+        samplerDesc.MinLOD = 0;
+        samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+        // Create the sampler state object on the CPU
+        hr = Context::Instance().device->CreateSamplerState(&samplerDesc, defaultSamplerState.GetAddressOf());
+        assert(SUCCEEDED(hr));
+
         return true;
     }
     bool Context::OnResize()
@@ -227,6 +281,7 @@ namespace dx11
         // 디퍼드 텍스처 이미지를 화면 상단에 출력
         DeferredContext::Instance().RenderToBackBuffer();
         grid->DrawGridAndGuizmo();
+        cubemap->RenderToBackBuffer();
         DeferredContext::Instance().DrawDeferredImagesOnTop();
         swapChain->Present(0, 0);
         return true;
@@ -255,6 +310,7 @@ namespace dx11
         cam->SetWorldPostion({ 0,2,-14 });
         updatables.insert(std::move(cam));
         grid = std::make_unique<Grid>();
+        cubemap = std::make_unique<CubeMap>();
     }
 
     // 삼각형을 그리는데 쓰였던 테스트 코드

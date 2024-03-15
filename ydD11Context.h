@@ -13,6 +13,8 @@
 #include "ydGrid.h"
 #include "ydDeferredDebugVertex.h"
 #include "yd11DeferredContext.h"
+#include "ydScreenPosUVVertex.h"
+#include "yd11CubeMap.h"
 
 
 namespace dx11
@@ -22,9 +24,11 @@ namespace dx11
     class Context : public Singleton<Context>
     {
     public:
+
         // default window size
         static unsigned long Window_Width;
         static unsigned long Window_Height;
+        static constexpr size_t indexStride = sizeof(unsigned int);
         ComPtr<ID3D11Device> device;
         ComPtr<ID3D11DeviceContext> deviceContext;
         ComPtr<IDXGIFactory> factory;
@@ -36,6 +40,10 @@ namespace dx11
         ComPtr<ID3D11RasterizerState> rasterizerState;
         ComPtr<ID3D11DepthStencilState> depthStencilState;
         DXGI_SAMPLE_DESC multiSamplingDesc{ .Count = 1,.Quality = 0 };
+
+        ComPtr<ID3D11Buffer> screenPosUVVertexBuffer;
+        ComPtr<ID3D11Buffer> screenPosUVIndexBuffer;
+        ComPtr<ID3D11SamplerState> defaultSamplerState;
 
         bool Init();
         // 처음 창이 생성될때, 혹은 창의 크기가 변경될때 호출되는 함수
@@ -53,6 +61,7 @@ namespace dx11
         std::unordered_set<std::unique_ptr<Updatable>> updatables;
         ComPtr<ID3D11Buffer> cbufferCommonMatrix;
         std::unique_ptr<Grid> grid;
+        std::unique_ptr<CubeMap> cubemap;
         HWND hWnd{ 0 };
     };
     unsigned long Context::Window_Width = 800;

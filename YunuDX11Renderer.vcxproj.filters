@@ -160,6 +160,9 @@
     <Filter Include="dx11\primitives\Vertex\CubeMapVertex">
       <UniqueIdentifier>{64c6c553-2e17-4348-9ca5-309abeb3dc6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\UVScreenPrimitives">
+      <UniqueIdentifier>{994492b2-2515-4999-b5ac-5312c5313b3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ydMain.cpp">
@@ -218,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="ydD11Context.cpp">
       <Filter>dx11\Context</Filter>
+    </ClCompile>
+    <ClCompile Include="yd11CubeMap.cpp">
+      <Filter>dx11\CubeMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,7 +299,7 @@
     <ClInclude Include="StaticMeshRenderer.h">
       <Filter>dx11\Renderer\StaticMeshRenderer</Filter>
     </ClInclude>
-    <ClInclude Include="ydDeferredLightVertex.h">
+    <ClInclude Include="ydScreenPosUVVertex.h">
       <Filter>dx11\primitives\Vertex\DeferredLightVertex</Filter>
     </ClInclude>
     <ClInclude Include="yd11CubeMap.h">
@@ -353,6 +359,9 @@
     </None>
     <None Include="ydMaterialBuffers.hlsli">
       <Filter>Shader\DeferredRendering\MaterialBuffers</Filter>
+    </None>
+    <None Include="UVScreenPrimitives.hlsli">
+      <Filter>Shader\UVScreenPrimitives</Filter>
     </None>
   </ItemGroup>
 </Project>

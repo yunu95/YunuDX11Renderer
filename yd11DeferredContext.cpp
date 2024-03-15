@@ -6,25 +6,6 @@ namespace dx11
 {
     bool DeferredContext::Init()
     {
-        // Define a sampler state description
-        D3D11_SAMPLER_DESC samplerDesc = {};
-        samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // Example filter mode
-        samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP; // Example addressing mode for U coordinate
-        samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP; // Example addressing mode for V coordinate
-        samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP; // Example addressing mode for W coordinate
-        samplerDesc.MipLODBias = 0.0f;
-        samplerDesc.MaxAnisotropy = 1;
-        samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
-        samplerDesc.BorderColor[0] = 0;
-        samplerDesc.BorderColor[1] = 0;
-        samplerDesc.BorderColor[2] = 0;
-        samplerDesc.BorderColor[3] = 0;
-        samplerDesc.MinLOD = 0;
-        samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-
-        // Create the sampler state object on the CPU
-        HRESULT hr = Context::Instance().device->CreateSamplerState(&samplerDesc, samplerState.GetAddressOf());
-        assert(SUCCEEDED(hr));
         return true;
     }
     bool DeferredContext::OnResize()
@@ -107,26 +88,6 @@ namespace dx11
 
             Context::Instance().device->CreateBuffer(&bufferDesc, &initData, debugGbufferVerticesBuffer.GetAddressOf());
         }
-        // 스왑체인의 백 버퍼 전체에 라이팅 연산이 적용된 출력물을 그리기 위한 버텍스 버퍼 생성
-        {
-            primitives::DeferredLightVertex vertices[6]{};
-            vertices[0] = { .x = -1,.y = -1,.u = 0,.v = 1 };
-            vertices[1] = { .x = -1,.y = 1,.u = 0,.v = 0 };
-            vertices[2] = { .x = 1,.y = 1,.u = 1,.v = 0 };
-            vertices[3] = { .x = -1,.y = -1,.u = 0,.v = 1 };
-            vertices[4] = { .x = 1,.y = 1,.u = 1,.v = 0 };
-            vertices[5] = { .x = 1,.y = -1,.u = 1,.v = 1 };
-
-            D3D11_BUFFER_DESC bufferDesc = {};
-            bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-            bufferDesc.ByteWidth = sizeof(vertices);
-            bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-            bufferDesc.CPUAccessFlags = 0;
-            D3D11_SUBRESOURCE_DATA initData = {};
-            initData.pSysMem = vertices;
-
-            Context::Instance().device->CreateBuffer(&bufferDesc, &initData, lightVerticesBuffer.GetAddressOf());
-        }
 
         return true;
     }
@@ -174,16 +135,17 @@ namespace dx11
         auto inputLayout = ResourceManager::Instance().GetInputLayout(vs);
         Context::Instance().deviceContext->IASetInputLayout(inputLayout);
 
-        static UINT stride = sizeof(primitives::DeferredLightVertex);
+        static UINT stride = sizeof(primitives::ScreenPosUVVertex);
         static UINT offset = 0;
         Context::Instance().deviceContext->OMSetRenderTargets(1, Context::Instance().renderTargetView.GetAddressOf(), nullptr);
         Context::Instance().deviceContext->PSSetShaderResources(0, gBufferCount, gBufferSRVs);
-        Context::Instance().deviceContext->PSSetSamplers(0, 1, samplerState.GetAddressOf());
-        Context::Instance().deviceContext->IASetVertexBuffers(0, 1, lightVerticesBuffer.GetAddressOf(), &stride, &offset);
+        Context::Instance().deviceContext->PSSetSamplers(0, 1, Context::Instance().defaultSamplerState.GetAddressOf());
+        Context::Instance().deviceContext->IASetVertexBuffers(0, 1, Context::Instance().screenPosUVVertexBuffer.GetAddressOf(), &stride, &offset);
+        Context::Instance().deviceContext->IASetIndexBuffer(Context::Instance().screenPosUVIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
         Context::Instance().deviceContext->VSSetShader(vs, nullptr, 0);
         Context::Instance().deviceContext->PSSetShader(ps, nullptr, 0);
         Context::Instance().deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-        Context::Instance().deviceContext->Draw(6, 0);
+        Context::Instance().deviceContext->DrawIndexed(6, 0, 0);
 
         static ID3D11ShaderResourceView* nullSRVs[gBufferCount] = { nullptr };
         Context::Instance().deviceContext->PSSetShaderResources(0, gBufferCount, nullSRVs);
@@ -203,7 +165,7 @@ namespace dx11
 
         Context::Instance().deviceContext->PSSetShaderResources(0, gBufferCount, gBufferSRVs);
 
-        Context::Instance().deviceContext->PSSetSamplers(0, 1, samplerState.GetAddressOf());
+        Context::Instance().deviceContext->PSSetSamplers(0, 1, Context::Instance().defaultSamplerState.GetAddressOf());
         Context::Instance().deviceContext->IASetVertexBuffers(0, 1, debugGbufferVerticesBuffer.GetAddressOf(), &stride, &offset);
         Context::Instance().deviceContext->VSSetShader(vs, nullptr, 0);
         Context::Instance().deviceContext->PSSetShader(ps, nullptr, 0);

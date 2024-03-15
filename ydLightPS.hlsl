@@ -1,11 +1,5 @@
 #include "gBuffers.hlsli"
-
-struct PS_INPUT
-{
-    // actually, uv is all that matters from this point.
-    float4 position : SV_POSITION;
-    float2 uv : TEXCOORD;
-};
+#include "UVScreenPrimitives.hlsli"
 
 float4 main(PS_INPUT input) : SV_TARGET
 {

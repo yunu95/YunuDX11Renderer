@@ -1,16 +1,10 @@
 #include "gBuffers.hlsli"
-
-struct PS_INPUT
-{
-    // actually, uv is all that matters from this point.
-    float4 position : SV_POSITION;
-    float2 uv : TEXCOORD;
-};
+#include "UVScreenPrimitives.hlsli"
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
     //float4 color = albedoTexture.Sample(gBufferSampler, input.uv);
-    float4 color = float4(1.0f, 0.0f, 0.0f, 1.0f);
+    float4 color = float4(0.3137f, 0.7373f, 0.8745f, 1.0f);
     //return float4(1.0f, 1.0f, 1.0f, 1.0f);
     // 감마 코렉숀
     //color = color / (color + float4(1.0, 1.0, 1.0, 1.0));
