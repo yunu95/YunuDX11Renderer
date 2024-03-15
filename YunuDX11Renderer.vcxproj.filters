@@ -46,12 +46,6 @@
     <Filter Include="dx12\context">
       <UniqueIdentifier>{43235ba5-b697-44d1-948a-d471be4cb8b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="primitives">
-      <UniqueIdentifier>{41bc50c0-a639-4039-82df-5ac1d2dcee50}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="primitives\Vertex">
-      <UniqueIdentifier>{5749ab13-851e-4153-a70a-bf967fd79644}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader">
       <UniqueIdentifier>{3bb1f85d-54fd-4b49-8164-d274e55a8fc1}</UniqueIdentifier>
     </Filter>
@@ -94,38 +88,17 @@
     <Filter Include="dx11\resource\ResourceManager">
       <UniqueIdentifier>{7f4be354-47ef-47fc-935f-fd141a239484}</UniqueIdentifier>
     </Filter>
-    <Filter Include="primitives\Vertex\ColoredVertex">
-      <UniqueIdentifier>{41c2f34e-312b-4ef7-b230-52196fa44aca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="primitives\Vertex\StaticMeshVertex">
-      <UniqueIdentifier>{75499bcf-2ed4-462e-89e1-4ec0a617a06a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\ColoredShader">
       <UniqueIdentifier>{19df4b87-090b-4a90-bd78-fcbeee22baa0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shader\DefaultPixelShader">
       <UniqueIdentifier>{1a9fc154-3c6d-4e27-b66a-1d6dc0dd4b58}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\gBufferDebugShdaer">
-      <UniqueIdentifier>{6d35755b-87f2-482d-aaa3-832ddc073161}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\gBuffer">
-      <UniqueIdentifier>{4379fc91-d1bb-438a-ac58-157a577c6560}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="primitives\Vertex\DeferredDebugVertex">
-      <UniqueIdentifier>{768e3319-0771-4561-8e3a-abd46e1d7a7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\materialBuffers">
-      <UniqueIdentifier>{ff0f886c-2543-4f6a-b162-49f71ba387f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="dx11\resource\Material">
       <UniqueIdentifier>{0dd914a8-6299-4222-a545-36e552280e97}</UniqueIdentifier>
     </Filter>
     <Filter Include="dx11\resource\Texture">
       <UniqueIdentifier>{3f7ebe9e-fb55-40ea-9321-11d9d70b90b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\gBufferMergeShader">
-      <UniqueIdentifier>{5b2ace35-d425-47f1-bd93-0d5c7b54587c}</UniqueIdentifier>
     </Filter>
     <Filter Include="dx11\Material">
       <UniqueIdentifier>{01e8a8b8-73a3-4ba5-a156-ea134a5b4d55}</UniqueIdentifier>
@@ -142,8 +115,50 @@
     <Filter Include="dx11\Context\DeferredContext">
       <UniqueIdentifier>{84755698-3cde-407d-88e8-f04c877e677e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\MergeTextureByDepthShader">
+    <Filter Include="Shader\DeferredRendering">
+      <UniqueIdentifier>{3420554d-a216-4dbb-a043-fc728b0a2ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\DeferredRendering\gBufferDebugShdaer">
+      <UniqueIdentifier>{6d35755b-87f2-482d-aaa3-832ddc073161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\DeferredRendering\gBuffer">
+      <UniqueIdentifier>{4379fc91-d1bb-438a-ac58-157a577c6560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\DeferredRendering\LightShader">
+      <UniqueIdentifier>{5b2ace35-d425-47f1-bd93-0d5c7b54587c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\DeferredRendering\MaterialBuffers">
+      <UniqueIdentifier>{ff0f886c-2543-4f6a-b162-49f71ba387f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\DeferredRendering\MergeTextureByDepthShader">
       <UniqueIdentifier>{9ec647eb-f0a5-4538-95ea-86e553644d29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\primitives">
+      <UniqueIdentifier>{41bc50c0-a639-4039-82df-5ac1d2dcee50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\primitives\Vertex">
+      <UniqueIdentifier>{5749ab13-851e-4153-a70a-bf967fd79644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\primitives\Vertex\ColoredVertex">
+      <UniqueIdentifier>{41c2f34e-312b-4ef7-b230-52196fa44aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\primitives\Vertex\StaticMeshVertex">
+      <UniqueIdentifier>{75499bcf-2ed4-462e-89e1-4ec0a617a06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\primitives\Vertex\DeferredDebugVertex">
+      <UniqueIdentifier>{768e3319-0771-4561-8e3a-abd46e1d7a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\primitives\Vertex\DeferredLightVertex">
+      <UniqueIdentifier>{207c035a-cbd9-474d-9b7a-06bbb1efd506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\CubeMapShader">
+      <UniqueIdentifier>{4f093390-99d6-4a48-ac07-3923543bba32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\CubeMap">
+      <UniqueIdentifier>{db71255e-f0a6-4b91-a591-13bc4e15eea1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx11\primitives\Vertex\CubeMapVertex">
+      <UniqueIdentifier>{64c6c553-2e17-4348-9ca5-309abeb3dc6d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +216,9 @@
     <ClCompile Include="StaticMeshRenderer.cpp">
       <Filter>dx11\Renderer\StaticMeshRenderer</Filter>
     </ClCompile>
+    <ClCompile Include="ydD11Context.cpp">
+      <Filter>dx11\Context</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ydDX11Dependency.h">
@@ -255,13 +273,13 @@
       <Filter>dx11\resource\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="ydColoredVertex.h">
-      <Filter>primitives\Vertex\ColoredVertex</Filter>
+      <Filter>dx11\primitives\Vertex\ColoredVertex</Filter>
     </ClInclude>
     <ClInclude Include="ydStaticMeshVertex.h">
-      <Filter>primitives\Vertex\StaticMeshVertex</Filter>
+      <Filter>dx11\primitives\Vertex\StaticMeshVertex</Filter>
     </ClInclude>
     <ClInclude Include="ydDeferredDebugVertex.h">
-      <Filter>primitives\Vertex\DeferredDebugVertex</Filter>
+      <Filter>dx11\primitives\Vertex\DeferredDebugVertex</Filter>
     </ClInclude>
     <ClInclude Include="yd11DeferredContext.h">
       <Filter>dx11\Context\DeferredContext</Filter>
@@ -274,6 +292,15 @@
     </ClInclude>
     <ClInclude Include="StaticMeshRenderer.h">
       <Filter>dx11\Renderer\StaticMeshRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ydDeferredLightVertex.h">
+      <Filter>dx11\primitives\Vertex\DeferredLightVertex</Filter>
+    </ClInclude>
+    <ClInclude Include="yd11CubeMap.h">
+      <Filter>dx11\CubeMap</Filter>
+    </ClInclude>
+    <ClInclude Include="yd11CubeMapVertex.h">
+      <Filter>dx11\primitives\Vertex\CubeMapVertex</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -290,22 +317,28 @@
       <Filter>Shader\DefaultPixelShader</Filter>
     </FxCompile>
     <FxCompile Include="ydGBufferDebugVertexShader.hlsl">
-      <Filter>Shader\gBufferDebugShdaer</Filter>
+      <Filter>Shader\DeferredRendering\gBufferDebugShdaer</Filter>
     </FxCompile>
     <FxCompile Include="ydGBufferDebugPixelShader.hlsl">
-      <Filter>Shader\gBufferDebugShdaer</Filter>
+      <Filter>Shader\DeferredRendering\gBufferDebugShdaer</Filter>
     </FxCompile>
-    <FxCompile Include="ydGBufferMergeVS.hlsl">
-      <Filter>Shader\gBufferMergeShader</Filter>
+    <FxCompile Include="ydLightVS.hlsl">
+      <Filter>Shader\DeferredRendering\LightShader</Filter>
     </FxCompile>
-    <FxCompile Include="ydGBufferMergePS.hlsl">
-      <Filter>Shader\gBufferMergeShader</Filter>
+    <FxCompile Include="ydLightPS.hlsl">
+      <Filter>Shader\DeferredRendering\LightShader</Filter>
     </FxCompile>
     <FxCompile Include="MergeTextureByDepthVS.hlsl">
-      <Filter>Shader\MergeTextureByDepthShader</Filter>
+      <Filter>Shader\DeferredRendering\MergeTextureByDepthShader</Filter>
     </FxCompile>
     <FxCompile Include="MergeTextureByDepthPS.hlsl">
-      <Filter>Shader\MergeTextureByDepthShader</Filter>
+      <Filter>Shader\DeferredRendering\MergeTextureByDepthShader</Filter>
+    </FxCompile>
+    <FxCompile Include="ydCubeMapVS.hlsl">
+      <Filter>Shader\CubeMapShader</Filter>
+    </FxCompile>
+    <FxCompile Include="ydCubeMapPS.hlsl">
+      <Filter>Shader\CubeMapShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -316,10 +349,10 @@
       <Filter>Shader\cbuffer</Filter>
     </None>
     <None Include="gBuffers.hlsli">
-      <Filter>Shader\gBuffer</Filter>
+      <Filter>Shader\DeferredRendering\gBuffer</Filter>
     </None>
     <None Include="ydMaterialBuffers.hlsli">
-      <Filter>Shader\materialBuffers</Filter>
+      <Filter>Shader\DeferredRendering\MaterialBuffers</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
 
 namespace dx11
 {
-    void StaticMesh::SetVertexVec(const std::vector<StaticMeshVertex>& vertexVec)
+    void StaticMesh::SetVertexVec(const std::vector<primitives::StaticMeshVertex>& vertexVec)
     {
         D3D11_BUFFER_DESC bufferDesc
         {

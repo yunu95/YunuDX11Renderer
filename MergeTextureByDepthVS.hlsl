@@ -11,7 +11,7 @@ struct PS_INPUT
     float2 Tex : TEXCOORD0;
 };
 
-PS_INPUT VS(VS_INPUT input)
+PS_INPUT main(VS_INPUT input)
 {
     PS_INPUT output;
     output.Pos = input.Pos;

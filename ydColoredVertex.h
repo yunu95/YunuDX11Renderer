@@ -1,11 +1,11 @@
 #pragma once
 #include "ydDX11Dependency.h"
 
-namespace primitives
+namespace dx11::primitives
 {
     struct ColoredVertex {
         float x, y, z;
-        byte padding[4];
+        std::byte padding[4];
         DirectX::XMFLOAT4 color;
     };
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "ydDX11Dependency.h"
 
-namespace dx11
+namespace dx11::primitives
 {
     struct StaticMeshVertex
     {

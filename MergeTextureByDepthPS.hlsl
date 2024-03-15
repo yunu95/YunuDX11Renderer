@@ -7,21 +7,22 @@ Texture2D Texture1 : register(t2);
 Texture2D Depth1 : register(t3);
 
 // The pixel shader
-float4 PS(float2 TexCoord : TEXCOORD) : SV_Target
+float4 main(float2 TexCoord : TEXCOORD) : SV_Target
 {
+    return float4(1.0f, 1.0f, 1.0f, 1.0f);
     // Sample the depth from both depth textures
-    float depth0 = Depth0.Sample(SampleType, TexCoord).r;
-    float depth1 = Depth1.Sample(SampleType, TexCoord).r;
+    //float depth0 = Depth0.Sample(SampleType, TexCoord).r;
+    //float depth1 = Depth1.Sample(SampleType, TexCoord).r;
 
-    // Compare depths
-    if (depth0 < depth1)
-    {
-        // If the first texture is closer, output its color
-        return Texture0.Sample(SampleType, TexCoord);
-    }
-    else
-    {
-        // Otherwise, output the second texture's color
-        return Texture1.Sample(SampleType, TexCoord);
-    }
+    //// Compare depths
+    //if (depth0 < depth1)
+    //{
+    //    // If the first texture is closer, output its color
+    //    return Texture0.Sample(SampleType, TexCoord);
+    //}
+    //else
+    //{
+    //    // Otherwise, output the second texture's color
+    //    return Texture1.Sample(SampleType, TexCoord);
+    //}
 }

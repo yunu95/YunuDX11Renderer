@@ -38,17 +38,6 @@ float4 main(VS_OUTPUT input) : SV_TARGET
             color = float4(soleColor, soleColor, soleColor, 1);
             //color = float4(colorUint, colorUint, colorUint, 1);
             break;
-        case 4:
-            soleColor = roughnessTexture.Sample(gBufferSampler, input.uv);
-            color = float4(soleColor, soleColor, soleColor, 1);
-            //colorUint = roughnessTexture.Sample(gBufferSampler, input.uv);
-            //color = float4(colorUint, colorUint, colorUint, 1);
-            break;
-        case 5:
-            //colorUint4 = ambientOcclusionTexture.Load(int3(input.uv, 0));
-            //color = float4(colorUint4.x, colorUint4.y, colorUint4.z, 1);
-            color = ambientOcclusionTexture.Sample(gBufferSampler, input.uv);
-            break;
     }
     return color;
 }
