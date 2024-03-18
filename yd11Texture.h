@@ -1,5 +1,5 @@
 #pragma once
-#include "ydDX11Dependency.h"
+#include "yd11DXDependency.h"
 
 namespace dx11
 {
@@ -7,7 +7,7 @@ namespace dx11
     {
     public:
         Texture() = default;
+        ComPtr<ID3D11Resource> texture;
         ComPtr<ID3D11ShaderResourceView> srv;
-        //ComPtr<ID3D11Texture2D> texture;
     };
 }

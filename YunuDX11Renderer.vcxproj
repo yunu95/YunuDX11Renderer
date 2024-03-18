@@ -115,11 +115,12 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;D3DCompiler.lib;dxguid.lib;DirectXTex.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;D3DCompiler.lib;dxguid.lib;DirectXTex.lib;DirectXTK.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(projectdir)RuntimeDependency\resources" "$(targetdir)" /D /E /C /Q /H /R /Y /K /I /S
+
 xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir)" /D /E /C /Q /H /R /Y /K /I /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -142,11 +143,12 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;D3DCompiler.lib;dxguid.lib;DirectXTex.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;D3DCompiler.lib;dxguid.lib;DirectXTex.lib;DirectXTK.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(projectdir)RuntimeDependency\resources" "$(targetdir)" /D /E /C /Q /H /R /Y /K /I /S
+
 xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir)" /D /E /C /Q /H /R /Y /K /I /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -158,14 +160,14 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
     <ClCompile Include="Include\ImGui\imgui_draw.cpp" />
     <ClCompile Include="Include\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Include\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="StaticMeshRenderer.cpp" />
+    <ClCompile Include="yd11StaticMeshRenderer.cpp" />
     <ClCompile Include="yd11CubeMap.cpp" />
     <ClCompile Include="yd11DeferredContext.cpp" />
     <ClCompile Include="yd11Material.cpp" />
     <ClCompile Include="yd11StaticMesh.cpp" />
-    <ClCompile Include="ydCamera.cpp" />
-    <ClCompile Include="ydD11Context.cpp" />
-    <ClCompile Include="ydD11ResourceManager.cpp" />
+    <ClCompile Include="yd11Camera.cpp" />
+    <ClCompile Include="yd11Context.cpp" />
+    <ClCompile Include="yd11ResourceManager.cpp" />
     <ClCompile Include="ydGrid.cpp" />
     <ClCompile Include="ydMain_imgui.cpp" />
     <ClCompile Include="ydRenderCycle.cpp" />
@@ -173,54 +175,42 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
     <ClCompile Include="SimpleMath.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="StaticMeshRenderer.h" />
+    <ClInclude Include="yd11StaticMeshRenderer.h" />
     <ClInclude Include="yd11CubeMap.h" />
-    <ClInclude Include="yd11CubeMapVertex.h" />
+    <ClInclude Include="yd11CubeMapMeshVertex.h" />
     <ClInclude Include="yd11Material.h" />
     <ClInclude Include="yd11Texture.h" />
     <ClInclude Include="yd11DeferredContext.h" />
-    <ClInclude Include="ydDeferredDebugVertex.h" />
-    <ClInclude Include="ydScreenPosUVVertex.h" />
-    <ClInclude Include="ydStaticMeshVertex.h" />
+    <ClInclude Include="yd11DeferredDebugVertex.h" />
+    <ClInclude Include="yd11ScreenPosUVVertex.h" />
+    <ClInclude Include="yd11StaticMeshVertex.h" />
     <ClInclude Include="ydGrid.h" />
     <ClInclude Include="yd11StaticMesh.h" />
-    <ClInclude Include="ydRoamingCamera.h" />
+    <ClInclude Include="yd11RoamingCamera.h" />
     <ClInclude Include="ydUpdatable.h" />
-    <ClInclude Include="ydCamera.h" />
-    <ClInclude Include="ydCommonMatrixBuffer.h" />
-    <ClInclude Include="ydD11ResourceManager.h" />
+    <ClInclude Include="yd11Camera.h" />
+    <ClInclude Include="yd11CommonMatrixBuffer.h" />
+    <ClInclude Include="yd11ResourceManager.h" />
     <ClInclude Include="ydD12Context.h" />
-    <ClInclude Include="ydD11Context.h" />
-    <ClInclude Include="ydDX11Dependency.h" />
+    <ClInclude Include="yd11Context.h" />
+    <ClInclude Include="yd11DXDependency.h" />
     <ClInclude Include="ydMain_imgui.h" />
     <ClInclude Include="ydRenderCycle.h" />
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="ydSingleton.h" />
     <ClInclude Include="ydSnippet.h" />
-    <ClInclude Include="ydTransform.h" />
-    <ClInclude Include="ydColoredVertex.h" />
+    <ClInclude Include="yd11Transform.h" />
+    <ClInclude Include="yd11ColoredVertex.h" />
     <ClInclude Include="ydInput.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="MergeTextureByDepthPS.hlsl">
+    <FxCompile Include="yd11ColoredPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="MergeTextureByDepthVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="ydColoredPixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="ydColoredVertexShader.hlsl">
+    <FxCompile Include="yd11ColoredVertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
@@ -228,20 +218,20 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CommonBuffer.hlsli" />
-    <FxCompile Include="ydCubeMapPS.hlsl">
+    <None Include="yd11CommonBuffer.hlsli" />
+    <FxCompile Include="yd11CubeMapPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="ydCubeMapVS.hlsl">
+    <FxCompile Include="yd11CubeMapVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="ydGBufferDebugPixelShader.hlsl">
+    <FxCompile Include="yd11GBufferDebugPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
@@ -249,42 +239,42 @@ xcopy "$(projectdir)RuntimeDependency\$(platform)\$(configuration)" "$(targetdir
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="ydGBufferDebugVertexShader.hlsl">
+    <FxCompile Include="yd11GBufferDebugVertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="ydLightPS.hlsl">
+    <FxCompile Include="yd11LightPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="ydLightVS.hlsl">
+    <FxCompile Include="yd11LightVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="ydStaticMeshPixelShader.hlsl">
+    <FxCompile Include="yd11StaticMeshPixelShader.hlsl">
       <FileType>Document</FileType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="ydStaticMeshVertexShader.hlsl">
+    <FxCompile Include="yd11StaticMeshVertexShader.hlsl">
       <FileType>Document</FileType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <None Include="gBuffers.hlsli" />
+    <None Include="yd11GBuffers.hlsli" />
     <None Include="SimpleMath.inl" />
-    <None Include="UVScreenPrimitives.hlsli" />
-    <None Include="ydMaterialBuffers.hlsli" />
+    <None Include="yd11UVScreenPrimitives.hlsli" />
+    <None Include="yd11MaterialBuffers.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

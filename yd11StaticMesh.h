@@ -1,6 +1,6 @@
 #pragma once
-#include "ydStaticMeshVertex.h"
-#include "ydDX11Dependency.h"
+#include "yd11StaticMeshVertex.h"
+#include "yd11DXDependency.h"
 
 namespace dx11
 {

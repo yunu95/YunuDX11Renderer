@@ -1,6 +1,6 @@
 #include "yd11DeferredContext.h"
 #include "yd11Texture.h"
-#include "ydD11Context.h"
+#include "yd11Context.h"
 
 namespace dx11
 {
@@ -96,8 +96,8 @@ namespace dx11
         static auto arm = ResourceManager::Instance().LoadTexture(L"T_Hat_ARM.png");
         static auto albedo = ResourceManager::Instance().LoadTexture(L"T_Hat_BaseColor.png");
         static auto normal = ResourceManager::Instance().LoadTexture(L"T_Hat_Normal.png");
-        static auto vertexShader = ResourceManager::Instance().LoadVertexShaderFromFile(L"ydStaticMeshVertexShader.cso");
-        static auto pixelShader = ResourceManager::Instance().LoadPixelShaderFromFile(L"ydStaticMeshPixelShader.cso");
+        static auto vertexShader = ResourceManager::Instance().LoadVertexShaderFromFile(L"yd11StaticMeshVertexShader.cso");
+        static auto pixelShader = ResourceManager::Instance().LoadPixelShaderFromFile(L"yd11StaticMeshPixelShader.cso");
 
         static ID3D11ShaderResourceView* materialSRVs[3] = { albedo->srv.Get(),normal->srv.Get(),arm->srv.Get() };
         for (auto& each : gBufferRTVs)
@@ -130,8 +130,8 @@ namespace dx11
     }
     void DeferredContext::RenderToBackBuffer()
     {
-        static auto vs = ResourceManager::Instance().LoadVertexShaderFromFile(L"ydLightVS.cso");
-        static auto ps = ResourceManager::Instance().LoadPixelShaderFromFile(L"ydLightPS.cso");
+        static auto vs = ResourceManager::Instance().LoadVertexShaderFromFile(L"yd11LightVS.cso");
+        static auto ps = ResourceManager::Instance().LoadPixelShaderFromFile(L"yd11LightPS.cso");
         auto inputLayout = ResourceManager::Instance().GetInputLayout(vs);
         Context::Instance().deviceContext->IASetInputLayout(inputLayout);
 

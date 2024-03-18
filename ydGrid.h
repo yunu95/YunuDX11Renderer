@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ydDX11Dependency.h"
-#include "ydColoredVertex.h"
+#include "yd11DXDependency.h"
+#include "yd11ColoredVertex.h"
 #include <vector>
 
 namespace dx11

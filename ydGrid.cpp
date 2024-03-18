@@ -1,5 +1,5 @@
 #include "ydGrid.h"
-#include "ydD11Context.h"
+#include "yd11Context.h"
 
 namespace dx11
 {
@@ -11,7 +11,7 @@ namespace dx11
             .CullMode = D3D11_CULL_NONE,
         };
         Context::Instance().device->CreateRasterizerState(&rasterizerDesc, rasterizerState.GetAddressOf());
-        vs = ResourceManager::Instance().LoadVertexShaderFromFile(L"ydColoredVertexShader.cso");
+        vs = ResourceManager::Instance().LoadVertexShaderFromFile(L"yd11ColoredVertexShader.cso");
         ps = ResourceManager::Instance().LoadPixelShaderFromFile(L"ydColoredPixelShader.cso");
         inputLayout = ResourceManager::Instance().GetInputLayout(vs);
         // 그리드 버텍스

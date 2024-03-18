@@ -1,5 +1,5 @@
 #include "yd11StaticMesh.h"
-#include "ydD11Context.h"
+#include "yd11Context.h"
 
 namespace dx11
 {

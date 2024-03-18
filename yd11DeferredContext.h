@@ -1,7 +1,7 @@
 #pragma once
-#include "ydDX11Dependency.h"
+#include "yd11DXDependency.h"
 #include "ydSingleton.h"
-#include "ydDeferredDebugVertex.h"
+#include "yd11DeferredDebugVertex.h"
 
 namespace dx11
 {
