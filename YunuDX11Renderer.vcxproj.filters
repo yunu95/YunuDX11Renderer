@@ -148,9 +148,6 @@
     <Filter Include="Shader\CubeMapShader">
       <UniqueIdentifier>{4f093390-99d6-4a48-ac07-3923543bba32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\DefaultPixelShader">
-      <UniqueIdentifier>{1a9fc154-3c6d-4e27-b66a-1d6dc0dd4b58}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\DeferredRendering">
       <UniqueIdentifier>{3420554d-a216-4dbb-a043-fc728b0a2ac0}</UniqueIdentifier>
     </Filter>
@@ -165,6 +162,9 @@
     </Filter>
     <Filter Include="Shader\MaterialBuffers">
       <UniqueIdentifier>{ff0f886c-2543-4f6a-b162-49f71ba387f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\DeferredRendering\StaticMeshShader">
+      <UniqueIdentifier>{1a9fc154-3c6d-4e27-b66a-1d6dc0dd4b58}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -338,10 +338,10 @@
       <Filter>Shader\DeferredRendering\LightShader</Filter>
     </FxCompile>
     <FxCompile Include="yd11StaticMeshVertexShader.hlsl">
-      <Filter>Shader\DefaultPixelShader</Filter>
+      <Filter>Shader\DeferredRendering\StaticMeshShader</Filter>
     </FxCompile>
     <FxCompile Include="yd11StaticMeshPixelShader.hlsl">
-      <Filter>Shader\DefaultPixelShader</Filter>
+      <Filter>Shader\DeferredRendering\StaticMeshShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

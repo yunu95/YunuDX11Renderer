@@ -277,6 +277,7 @@ namespace dx11
         //NumBuffers: Number of constant buffers to bind. This specifies how many constant buffers you want to bind starting from the StartSlot.
         //ppConstantBuffers: An array of pointers to constant buffer interfaces. These are the constant buffers you want to bind to the vertex shader. The array size should be equal to NumBuffers.
         deviceContext->VSSetConstantBuffers(0, 1, cbufferCommonMatrix.GetAddressOf());
+        deviceContext->PSSetConstantBuffers(0, 1, cbufferCommonMatrix.GetAddressOf());
         return true;
     }
     bool Context::Update()

@@ -130,6 +130,7 @@ namespace dx11
     }
     void DeferredContext::RenderToBackBuffer()
     {
+        Context::Instance().UpdateCameraCbuffer();
         static auto vs = ResourceManager::Instance().LoadVertexShaderFromFile(L"yd11LightVS.cso");
         static auto ps = ResourceManager::Instance().LoadPixelShaderFromFile(L"yd11LightPS.cso");
         auto inputLayout = ResourceManager::Instance().GetInputLayout(vs);

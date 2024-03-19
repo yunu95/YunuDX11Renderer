@@ -1,4 +1,5 @@
 #include "yd11UVScreenPrimitives.hlsli"
+#include "yd11CommonBuffer.hlsli"
 
 PS_INPUT main(VS_INPUT input)
 {
